@@ -1,6 +1,3 @@
-// [1] Hello World와 메서드 - Hello World & Methods
-// 레벨: 1 | Java의 기본 구조와 메서드를 배웁니다
-
 public class 001_HelloWorld {
 
     // public static void main() - 프로그램 시작점
@@ -34,3 +31,4 @@ public class 001_HelloWorld {
         return a + b;
     }
 }
+
