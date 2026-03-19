@@ -1,0 +1,51 @@
+<!-- [1212] 다양한 Input 타입 - Input Types -->
+<!-- 레벨: 2 | HTML5의 다양한 input 타입과 속성을 배웁니다 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Input 타입</title>
+</head>
+<body>
+  <h1>다양한 Input 타입</h1>
+  <form>
+
+    <p>
+      <label>텍스트: <input type="text" placeholder="이름 입력"></label>
+    </p>
+    <p>
+      <label>이메일: <input type="email" placeholder="example@email.com"></label>
+    </p>
+    <p>
+      <label>숫자: <input type="number" min="0" max="100" value="50"></label>
+    </p>
+    <p>
+      <label>날짜: <input type="date"></label>
+    </p>
+    <p>
+      <label>시간: <input type="time"></label>
+    </p>
+    <p>
+      <label>색상: <input type="color" value="#FF6B6B"></label>
+    </p>
+    <p>
+      <label>범위: <input type="range" min="0" max="100" value="70"></label>
+    </p>
+
+    <!-- checkbox: 다중 선택 -->
+    <p>좋아하는 언어:</p>
+    <label><input type="checkbox" name="lang" value="html"> HTML</label>
+    <label><input type="checkbox" name="lang" value="css"> CSS</label>
+    <label><input type="checkbox" name="lang" value="js"> JavaScript</label>
+
+    <!-- radio: 단일 선택 -->
+    <p>경험 수준:</p>
+    <label><input type="radio" name="level" value="beginner"> 초급</label>
+    <label><input type="radio" name="level" value="intermediate"> 중급</label>
+    <label><input type="radio" name="level" value="advanced"> 고급</label>
+
+    <p><button type="submit">제출</button></p>
+  </form>
+</body>
+</html>
