@@ -1,0 +1,64 @@
+<!-- [1207] 테이블 - Tables -->
+<!-- 레벨: 2 | table, thead, tbody, th, td로 표를 만드는 방법을 배웁니다 -->
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>테이블</title>
+</head>
+<body>
+  <h1>테이블(Table) 태그</h1>
+
+  <!-- 기본 테이블 구조 -->
+  <table border="1">
+    <thead>
+      <tr>
+        <th>이름</th>
+        <th>나이</th>
+        <th>직업</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>김철수</td>
+        <td>28</td>
+        <td>개발자</td>
+      </tr>
+      <tr>
+        <td>이영희</td>
+        <td>25</td>
+        <td>디자이너</td>
+      </tr>
+      <tr>
+        <td>박민수</td>
+        <td>32</td>
+        <td>기획자</td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="3">총 3명</td>
+      </tr>
+    </tfoot>
+  </table>
+
+  <!-- colspan: 열 병합, rowspan: 행 병합 -->
+  <h2>셀 병합 예시</h2>
+  <table border="1">
+    <tr>
+      <th colspan="2">이름/나이</th>
+      <th>직업</th>
+    </tr>
+    <tr>
+      <td rowspan="2">홍길동</td>
+      <td>30</td>
+      <td>프리랜서</td>
+    </tr>
+    <tr>
+      <td>부업</td>
+      <td>강사</td>
+    </tr>
+  </table>
+</body>
+</html>
