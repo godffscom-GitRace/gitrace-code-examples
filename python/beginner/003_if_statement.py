@@ -36,4 +36,4 @@ if not has_id:
 # 들여쓰기 규칙 - Python은 들여쓰기로 블록을 구분
 for a in [5, 12, 16, 30, 70]:
     fee = calc_fee(a)
-    print(f"나이 {a}세 → 입장료: {fee}원")
+    print(f"나이 {a}세 : 입장료: {fee}원")
