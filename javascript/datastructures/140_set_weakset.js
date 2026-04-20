@@ -27,7 +27,7 @@ console.log(`  중복 제거: [${unique}]`);
 // 문자열 중복 문자 제거
 const str = "abracadabra";
 const uniqueChars = [...new Set(str)].join("");
-console.log(`  "${str}" → "${uniqueChars}"`);
+console.log(`  "${str}" => "${uniqueChars}"`);
 
 // === 집합 연산 ===
 console.log("\n=== 집합 연산 ===");
@@ -82,7 +82,7 @@ console.log(`  고유 페이지: ${visited.size}개`);
 
 // === WeakSet ===
 console.log("\n=== WeakSet ===");
-// WeakSet은 객체만 저장, 약한 참조 → 가비지 컬렉션 허용
+// WeakSet은 객체만 저장, 약한 참조 => 가비지 컬렉션 허용
 const weakSet = new WeakSet();
 
 let obj1 = { name: "객체1" };
