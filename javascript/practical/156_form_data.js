@@ -41,8 +41,8 @@ for (const [key, value] of formData.entries()) {
 // keys(), values()
 console.log(`  키 목록: [${[...formData.keys()]}]`);
 
-// === 객체 → FormData 변환 ===
-console.log("\n=== 객체 → FormData ===");
+// === 객체 => FormData 변환 ===
+console.log("\n=== 객체 => FormData ===");
 
 function objectToFormData(obj, form = new FormData(), prefix = "") {
   for (const [key, value] of Object.entries(obj)) {
@@ -72,7 +72,7 @@ for (const [key, value] of fd.entries()) {
   console.log(`    ${key}: ${value}`);
 }
 
-// === FormData → 객체 변환 ===
+// === FormData => 객체 변환 ===
 function formDataToObject(formData) {
   const obj = {};
   for (const [key, value] of formData.entries()) {
@@ -86,7 +86,7 @@ function formDataToObject(formData) {
   return obj;
 }
 
-console.log("\n=== FormData → 객체 ===");
+console.log("\n=== FormData => 객체 ===");
 const simple = new FormData();
 simple.append("name", "박지민");
 simple.append("tags", "개발");
@@ -121,15 +121,6 @@ async function submitForm(url, data) {
 
 console.log("  // FormData는 Content-Type 헤더를 수동 설정하지 않습니다");
 console.log("  // 브라우저가 multipart/form-data + boundary를 자동 설정합니다");
-
-// === 파일 업로드 패턴 (브라우저) ===
-console.log("\n=== 파일 업로드 패턴 (브라우저 코드) ===");
-console.log(`  const input = document.querySelector('input[type="file"]');`);
-console.log(`  const formData = new FormData();`);
-console.log(`  formData.append("avatar", input.files[0]);`);
-console.log(`  formData.append("username", "kim");`);
-console.log(`  `);
-console.log(`  fetch("/upload", { method: "POST", body: formData });`);
 
 console.log("\n=== 주의사항 ===");
 console.log("  1. Content-Type 헤더를 직접 설정하지 말 것");
