@@ -131,24 +131,3 @@ const checkDate = new Date("2026-06-15");
 console.log(`  6/15 in Q1: ${isInRange(checkDate, new Date("2026-01-01"), new Date("2026-03-31"))}`);
 console.log(`  6/15 in Q2: ${isInRange(checkDate, new Date("2026-04-01"), new Date("2026-06-30"))}`);
 
-// === 상대 시간 표시 ===
-console.log("\n=== 상대 시간 ===");
-function timeAgo(date) {
-  const seconds = Math.floor((Date.now() - date.getTime()) / 1000);
-  const intervals = [
-    { label: "년", seconds: 31536000 },
-    { label: "개월", seconds: 2592000 },
-    { label: "일", seconds: 86400 },
-    { label: "시간", seconds: 3600 },
-    { label: "분", seconds: 60 },
-  ];
-  for (const { label, seconds: s } of intervals) {
-    const count = Math.floor(seconds / s);
-    if (count >= 1) return `${count}${label} 전`;
-  }
-  return "방금 전";
-}
-
-console.log(`  1시간 전: ${timeAgo(new Date(Date.now() - 3600000))}`);
-console.log(`  3일 전: ${timeAgo(new Date(Date.now() - 259200000))}`);
-console.log(`  방금: ${timeAgo(new Date())}`);
