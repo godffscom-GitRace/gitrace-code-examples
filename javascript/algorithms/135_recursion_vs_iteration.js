@@ -52,11 +52,11 @@ console.log(`  반복 fib(30): ${(performance.now() - start2).toFixed(4)}ms`);
 // === 3. 하노이 탑 ===
 function hanoi(n, from, to, aux, moves = []) {
   if (n === 1) {
-    moves.push(`  ${from} → ${to}`);
+    moves.push(`  ${from} -> ${to}`);
     return moves;
   }
   hanoi(n - 1, from, aux, to, moves);
-  moves.push(`  ${from} → ${to}`);
+  moves.push(`  ${from} -> ${to}`);
   hanoi(n - 1, aux, to, from, moves);
   return moves;
 }
