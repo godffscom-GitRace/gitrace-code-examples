@@ -47,7 +47,7 @@ console.log(`  해의 수: ${solutions4.length}개\n`);
 solutions4.forEach((sol, idx) => {
   console.log(`  풀이 ${idx + 1}:`);
   sol.forEach(row => {
-    const visual = row.split("").map(c => c === "Q" ? "♛" : "·").join(" ");
+    const visual = row.split("").map(c => c === "Q" ? "Q" : ".").join(" ");
     console.log(`    ${visual}`);
   });
   console.log();
@@ -116,18 +116,3 @@ const perms = permutations([1, 2, 3]);
 console.log(`  [1,2,3] 순열 (${perms.length}개):`);
 perms.forEach(p => console.log(`    [${p}]`));
 
-// 스도쿠 솔버 (미니 3x3)
-console.log("\n=== 백트래킹: 미니 스도쿠 검증 ===");
-function isValidSudoku(board) {
-  for (let i = 0; i < 9; i++) {
-    const row = new Set(), col = new Set();
-    for (let j = 0; j < 9; j++) {
-      if (board[i][j] !== 0 && row.has(board[i][j])) return false;
-      row.add(board[i][j]);
-      if (board[j][i] !== 0 && col.has(board[j][i])) return false;
-      col.add(board[j][i]);
-    }
-  }
-  return true;
-}
-console.log("  스도쿠 검증 로직 구현 완료 (백트래킹 기반)");
