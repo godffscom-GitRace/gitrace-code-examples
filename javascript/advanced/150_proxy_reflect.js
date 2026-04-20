@@ -133,22 +133,3 @@ console.log(`  set 'd': ${obj.d}`);
 Reflect.deleteProperty(obj, "a");
 console.log(`  delete 'a': keys = [${Reflect.ownKeys(obj)}]`);
 
-// === 함수 호출 트랩 ===
-console.log("\n=== 함수 호출 트랩 ===");
-function createTracked(fn) {
-  let callCount = 0;
-  return new Proxy(fn, {
-    apply(target, thisArg, args) {
-      callCount++;
-      console.log(`  호출 #${callCount}: ${target.name}(${args.join(", ")})`);
-      const result = Reflect.apply(target, thisArg, args);
-      console.log(`  반환: ${result}`);
-      return result;
-    },
-  });
-}
-
-function add(a, b) { return a + b; }
-const trackedAdd = createTracked(add);
-trackedAdd(1, 2);
-trackedAdd(10, 20);
