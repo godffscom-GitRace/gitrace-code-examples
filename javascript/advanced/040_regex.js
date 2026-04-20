@@ -30,7 +30,7 @@ const patterns = {
 const emails = ["user@gmail.com", "invalid@", "test@naver.co.kr"];
 emails.forEach((email) => {
   const valid = patterns.email.test(email);
-  console.log(`${email} → ${valid ? "유효" : "무효"}`);
+  console.log(`${email} => ${valid ? "유효" : "무효"}`);
 });
 
 // 전화번호 검증
@@ -38,7 +38,7 @@ const phones = ["010-1234-5678", "01012345678", "02-123-4567"];
 console.log("\n전화번호 검증:");
 phones.forEach((phone) => {
   const valid = patterns.phone.test(phone);
-  console.log(`${phone} → ${valid ? "유효" : "무효"}`);
+  console.log(`${phone} -> ${valid ? "유효" : "무효"}`);
 });
 
 // 그룹 캡처 - ()
