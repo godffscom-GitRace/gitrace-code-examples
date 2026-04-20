@@ -128,38 +128,9 @@ console.log(`
     if (e.target.matches('.btn')) handler(e);
   });`);
 
-// === 7. 지연 로딩 패턴 ===
-console.log("\n=== 지연 초기화 ===");
-class LazyLoader {
-  constructor(initFn) {
-    this._initFn = initFn;
-    this._value = undefined;
-    this._initialized = false;
-  }
-
-  get value() {
-    if (!this._initialized) {
-      this._value = this._initFn();
-      this._initialized = true;
-      console.log("    (초기화 실행)");
-    }
-    return this._value;
-  }
-}
-
-const heavyData = new LazyLoader(() => {
-  return Array.from({ length: 1000 }, (_, i) => i * i);
-});
-
-console.log("  생성 시점: 아직 초기화 안됨");
-console.log(`  첫 접근: 길이 = ${heavyData.value.length}`);
-console.log(`  재접근: 길이 = ${heavyData.value.length}`);
-
 // === 최적화 요약 ===
 console.log("\n=== 최적화 요약 ===");
 console.log("  1. 적절한 자료구조 선택 (Map/Set > Array 검색)");
 console.log("  2. 메모이제이션으로 반복 계산 방지");
 console.log("  3. 이벤트 위임으로 리스너 수 줄이기");
-console.log("  4. 지연 로딩으로 불필요한 초기화 방지");
-console.log("  5. 배치 DOM 업데이트 (DocumentFragment)");
-console.log("  6. Web Worker로 무거운 연산 분리");
+console.log("  4. Web Worker로 무거운 연산 분리");
