@@ -109,7 +109,7 @@ class LinkedList {
 
   // 출력
   toString() {
-    return this.toArray().join(" → ") + " → null";
+    return this.toArray().join(" -> ") + " -> null";
   }
 }
 
@@ -151,24 +151,3 @@ const list2 = new LinkedList();
 console.log(`  리스트: ${list2}`);
 console.log(`  중간 값: ${findMiddle(list2)}`);
 
-// 사이클 감지
-function hasCycle(head) {
-  let slow = head, fast = head;
-  while (fast && fast.next) {
-    slow = slow.next;
-    fast = fast.next.next;
-    if (slow === fast) return true;
-  }
-  return false;
-}
-
-console.log("\n=== 사이클 감지 ===");
-console.log(`  일반 리스트: ${hasCycle(list2.head) ? "사이클 있음" : "사이클 없음"}`);
-
-// 사이클 만들기
-const cycleList = new LinkedList();
-[1, 2, 3, 4].forEach(v => cycleList.append(v));
-let node = cycleList.head;
-while (node.next) node = node.next;
-node.next = cycleList.head.next; // 마지막 → 두 번째 노드
-console.log(`  사이클 리스트: ${hasCycle(cycleList.head) ? "사이클 있음" : "사이클 없음"}`);
