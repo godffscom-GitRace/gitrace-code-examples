@@ -74,23 +74,6 @@ async function fetchWithTimeout(url, timeout = 5000) {
   }
 }
 
-// === 재시도 패턴 ===
-async function fetchWithRetry(url, retries = 3, delay = 1000) {
-  for (let i = 0; i < retries; i++) {
-    try {
-      const response = await fetch(url);
-      if (response.ok) return response;
-      throw new Error(`HTTP ${response.status}`);
-    } catch (err) {
-      console.log(`  시도 ${i + 1}/${retries} 실패: ${err.message}`);
-      if (i < retries - 1) {
-        await new Promise(r => setTimeout(r, delay * (i + 1))); // 지수 백오프
-      }
-    }
-  }
-  throw new Error(`${retries}번 재시도 모두 실패`);
-}
-
 // === 병렬 요청 ===
 async function fetchParallel(urls) {
   const promises = urls.map(url =>
@@ -99,59 +82,21 @@ async function fetchParallel(urls) {
   return Promise.all(promises);
 }
 
-// === API 래퍼 클래스 ===
-class ApiClient {
-  constructor(baseURL) {
-    this.baseURL = baseURL;
-  }
-
-  async request(endpoint, options = {}) {
-    const url = `${this.baseURL}${endpoint}`;
-    const config = {
-      headers: { "Content-Type": "application/json" },
-      ...options,
-    };
-    if (config.body && typeof config.body === "object") {
-      config.body = JSON.stringify(config.body);
-    }
-
-    const response = await fetch(url, config);
-    if (!response.ok) {
-      throw new Error(`API Error: ${response.status} ${response.statusText}`);
-    }
-    return response.json();
-  }
-
-  get(endpoint) { return this.request(endpoint); }
-  post(endpoint, data) { return this.request(endpoint, { method: "POST", body: data }); }
-  put(endpoint, data) { return this.request(endpoint, { method: "PUT", body: data }); }
-  delete(endpoint) { return this.request(endpoint, { method: "DELETE" }); }
-}
-
 // === 실행 ===
 async function main() {
-  // GET
   console.log("\n--- GET 요청 ---");
   await getUser(1);
 
-  // POST
   console.log("\n--- POST 요청 ---");
   await createPost({ title: "테스트 글", body: "내용입니다", userId: 1 });
 
-  // 병렬 요청
   console.log("\n--- 병렬 요청 ---");
   const urls = [1, 2, 3].map(id => `https://jsonplaceholder.typicode.com/users/${id}`);
   const users = await fetchParallel(urls);
   users.forEach(u => console.log(`  ${u.name || u.error}`));
 
-  // API 클래스
-  console.log("\n--- API 클라이언트 ---");
-  const api = new ApiClient("https://jsonplaceholder.typicode.com");
-  const posts = await api.get("/posts?_limit=3");
-  posts.forEach(p => console.log(`  [${p.id}] ${p.title.slice(0, 30)}...`));
-
   console.log("\n=== 정리 ===");
-  console.log("  fetch() → Response → .json() / .text() / .blob()");
+  console.log("  fetch() => Response => .json() / .text() / .blob()");
   console.log("  에러: response.ok 확인 필수 (404도 resolve됨)");
   console.log("  취소: AbortController 사용");
 }
