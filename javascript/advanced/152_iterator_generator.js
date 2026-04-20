@@ -114,23 +114,7 @@ function* outer() {
 
 console.log(`  위임: [${[...outer()]}]`);
 
-// 트리 순회 (Generator)
-function* traverse(node) {
-  if (!node) return;
-  yield node.val;
-  yield* traverse(node.left);
-  yield* traverse(node.right);
-}
-
-const tree = {
-  val: 1,
-  left: { val: 2, left: { val: 4, left: null, right: null }, right: { val: 5, left: null, right: null } },
-  right: { val: 3, left: null, right: { val: 6, left: null, right: null } },
-};
-
-console.log(`  트리 전위 순회: [${[...traverse(tree)]}]`);
-
-// === 실전 활용 ===
+// === 실전: ID 생성기 ===
 console.log("\n=== 실전: ID 생성기 ===");
 
 function* idGenerator(prefix = "ID") {
@@ -145,38 +129,3 @@ const orderIds = idGenerator("ORD");
 console.log(`  ${userIds.next().value}`);
 console.log(`  ${userIds.next().value}`);
 console.log(`  ${orderIds.next().value}`);
-
-// 범위 생성기
-function* range(start, end, step = 1) {
-  for (let i = start; i <= end; i += step) {
-    yield i;
-  }
-}
-
-console.log(`\n  range(0,10,2): [${[...range(0, 10, 2)]}]`);
-console.log(`  range(1,5): [${[...range(1, 5)]}]`);
-
-// 파이프라인 (lazy evaluation)
-console.log("\n=== 지연 평가 파이프라인 ===");
-
-function* filter(iterable, predicate) {
-  for (const item of iterable) {
-    if (predicate(item)) yield item;
-  }
-}
-
-function* map(iterable, fn) {
-  for (const item of iterable) {
-    yield fn(item);
-  }
-}
-
-// 1~100 중 짝수만 → 제곱 → 처음 5개
-const pipeline = take(
-  map(
-    filter(range(1, 100), n => n % 2 === 0),
-    n => n * n
-  ),
-  5
-);
-console.log(`  짝수 제곱 5개: [${pipeline}]`);
