@@ -34,7 +34,7 @@ function createBankAccount(initialBalance) {
   return {
     deposit(amount) {
       balance += amount;
-      console.log(`입금 ${amount}원 → 잔액: ${balance}원`);
+      console.log(`입금 ${amount}원 => 잔액: ${balance}원`);
     },
     withdraw(amount) {
       if (amount > balance) {
@@ -42,7 +42,7 @@ function createBankAccount(initialBalance) {
         return;
       }
       balance -= amount;
-      console.log(`출금 ${amount}원 → 잔액: ${balance}원`);
+      console.log(`출금 ${amount}원 => 잔액: ${balance}원`);
     },
     getBalance() {
       return balance;
@@ -51,8 +51,8 @@ function createBankAccount(initialBalance) {
 }
 
 const account = createBankAccount(10000);
-account.deposit(5000); // 입금 5000원 → 잔액: 15000원
-account.withdraw(3000); // 출금 3000원 → 잔액: 12000원
+account.deposit(5000); // 입금 5000원 => 잔액: 15000원
+account.withdraw(3000); // 출금 3000원 => 잔액: 12000원
 console.log(`현재 잔액: ${account.getBalance()}원`);
 // console.log(balance); // ReferenceError! 접근 불가
 
