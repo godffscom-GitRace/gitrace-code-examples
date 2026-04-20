@@ -59,7 +59,7 @@ class BankAccount {
   deposit(amount, pin) {
     if (pin !== this[_pin]) return "PIN 오류";
     this[_balance] += amount;
-    return `${amount.toLocaleString()}원 입금 → 잔액: ${this[_balance].toLocaleString()}원`;
+    return `${amount.toLocaleString()}원 입금 => 잔액: ${this[_balance].toLocaleString()}원`;
   }
 }
 
@@ -117,21 +117,3 @@ console.log(`\n  문자열: ${`가격: ${price}`}`);
 console.log(`  숫자: ${price + 1000}`);
 console.log(`  비교: ${price > 40000}`);
 
-// Symbol.hasInstance - instanceof 커스터마이징
-class EvenNumber {
-  static [Symbol.hasInstance](num) {
-    return typeof num === "number" && num % 2 === 0;
-  }
-}
-
-console.log(`\n  4 instanceof EvenNumber: ${4 instanceof EvenNumber}`);
-console.log(`  7 instanceof EvenNumber: ${7 instanceof EvenNumber}`);
-
-// Symbol.toStringTag
-class MyClass {
-  get [Symbol.toStringTag]() {
-    return "MyCustomClass";
-  }
-}
-
-console.log(`  toString: ${Object.prototype.toString.call(new MyClass())}`);
