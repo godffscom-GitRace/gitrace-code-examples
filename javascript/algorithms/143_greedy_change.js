@@ -27,7 +27,7 @@ for (const amount of amounts) {
   for (const { coin, count } of result) {
     console.log(`    ${coin}원 × ${count}개`);
   }
-  console.log(`    → 총 ${total}개 동전`);
+  console.log(`    => 총 ${total}개 동전`);
 }
 
 // 그리디가 실패하는 경우
@@ -67,7 +67,7 @@ function coinChangeDP(amount, coins) {
 
 console.log(`\n  DP 풀이:`);
 const dpResult = coinChangeDP(6, [1, 3, 4]);
-console.log(`  최소 동전: ${dpResult.count}개 → [${dpResult.coins}]`);
+console.log(`  최소 동전: ${dpResult.count}개 => [${dpResult.coins}]`);
 
 // 그리디 활용: 회의실 배정
 console.log("\n=== 회의실 배정 (그리디) ===");
@@ -101,47 +101,8 @@ const selected = maxMeetings(meetings);
 console.log("  전체 회의:");
 for (const m of meetings) {
   const bar = " ".repeat(m.start) + "█".repeat(m.end - m.start);
-  const mark = selected.includes(m) ? " ✓" : "";
+  const mark = selected.includes(m) ? " *" : "";
   console.log(`    ${m.name} [${m.start}-${m.end}] ${bar}${mark}`);
 }
 console.log(`  선택: ${selected.map(m => m.name).join(", ")} (${selected.length}개)`);
 
-// 그리디: 분할 가능 배낭
-console.log("\n=== 분할 가능 배낭 (그리디) ===");
-function fractionalKnapsack(items, capacity) {
-  // 단위 가치 기준 정렬
-  const sorted = items.map(item => ({
-    ...item,
-    ratio: item.value / item.weight,
-  })).sort((a, b) => b.ratio - a.ratio);
-
-  let totalValue = 0;
-  let remaining = capacity;
-  const taken = [];
-
-  for (const item of sorted) {
-    if (remaining >= item.weight) {
-      taken.push({ name: item.name, fraction: 1 });
-      totalValue += item.value;
-      remaining -= item.weight;
-    } else if (remaining > 0) {
-      const fraction = remaining / item.weight;
-      taken.push({ name: item.name, fraction });
-      totalValue += item.value * fraction;
-      remaining = 0;
-    }
-  }
-  return { totalValue, taken };
-}
-
-const items = [
-  { name: "금", weight: 10, value: 60 },
-  { name: "은", weight: 20, value: 100 },
-  { name: "동", weight: 30, value: 120 },
-];
-const result2 = fractionalKnapsack(items, 50);
-console.log(`  용량: 50kg`);
-for (const t of result2.taken) {
-  console.log(`    ${t.name}: ${(t.fraction * 100).toFixed(0)}%`);
-}
-console.log(`  최대 가치: ${result2.totalValue.toFixed(0)}`);
