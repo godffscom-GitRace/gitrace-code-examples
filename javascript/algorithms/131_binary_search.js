@@ -32,7 +32,7 @@ console.log(`배열: [${sorted}]`);
 const targets = [23, 72, 1, 91, 50];
 for (const t of targets) {
   const idx = binarySearch(sorted, t);
-  console.log(`  ${t} → ${idx >= 0 ? `인덱스 ${idx}` : "없음"}`);
+  console.log(`  ${t} => ${idx >= 0 ? `인덱스 ${idx}` : "없음"}`);
 }
 
 // 과정 시각화
