@@ -58,7 +58,7 @@ if (isMainThread) {
 
     console.log(`  4개 Worker 병렬: ${totalPrimes}개 소수 (${parallelTime.toFixed(1)}ms)`);
     results.forEach((r, i) =>
-      console.log(`    Worker ${i + 1}: ${ranges[i].start}~${ranges[i].end} → ${r.count}개`)
+      console.log(`    Worker ${i + 1}: ${ranges[i].start}~${ranges[i].end} => ${r.count}개`)
     );
 
     // 4. 메시지 기반 통신
