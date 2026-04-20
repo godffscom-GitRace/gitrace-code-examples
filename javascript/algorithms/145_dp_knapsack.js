@@ -80,7 +80,7 @@ for (let i = 1; i <= n; i++) {
   }
 }
 
-console.log(`  용량 →  ${Array.from({ length: smallCap + 1 }, (_, i) => i).join("  ")}`);
+console.log(`  용량 =>  ${Array.from({ length: smallCap + 1 }, (_, i) => i).join("  ")}`);
 for (let i = 0; i <= n; i++) {
   const label = i === 0 ? "없음" : smallItems[i - 1].name;
   console.log(`  ${label}:     ${dp[i].join("  ")}`);
@@ -119,21 +119,6 @@ function coinChange(coins, amount) {
 
 const coins = [1, 5, 10, 25];
 for (const amount of [30, 11, 63]) {
-  console.log(`  ${amount}원 → 최소 ${coinChange(coins, amount)}개 동전`);
+  console.log(`  ${amount}원 => 최소 ${coinChange(coins, amount)}개 동전`);
 }
 
-// 최장 증가 부분 수열 (LIS)
-console.log("\n=== DP: 최장 증가 부분 수열 ===");
-function lis(arr) {
-  const dp = Array(arr.length).fill(1);
-  for (let i = 1; i < arr.length; i++) {
-    for (let j = 0; j < i; j++) {
-      if (arr[j] < arr[i]) dp[i] = Math.max(dp[i], dp[j] + 1);
-    }
-  }
-  return Math.max(...dp);
-}
-
-const seq = [10, 22, 9, 33, 21, 50, 41, 60];
-console.log(`  [${seq}]`);
-console.log(`  LIS 길이: ${lis(seq)}`);
