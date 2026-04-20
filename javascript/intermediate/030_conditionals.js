@@ -15,7 +15,7 @@ function getGrade(score) {
     return "F";
   }
 }
-console.log(`85점 → ${getGrade(85)}`); // B
+console.log(`85점 => ${getGrade(85)}`); // B
 
 // switch-case
 function getDayName(day) {
@@ -35,7 +35,7 @@ console.log(getDayName(3)); // 수요일
 // 삼항 연산자
 const age = 20;
 const status = age >= 18 ? "성인" : "미성년자";
-console.log(`${age}살 → ${status}`);
+console.log(`${age}살 => ${status}`);
 
 // 단축 평가 (&&, ||)
 const user = { name: "김철수" };
