@@ -26,7 +26,7 @@ const nums = [2, 1, 5, 1, 3, 2, 8, 4, 1];
 const k = 3;
 const result = maxSumSubarray(nums, k);
 console.log(`  배열: [${nums}], k=${k}`);
-console.log(`  최대 합: ${result.maxSum} → [${result.subarray}]`);
+console.log(`  최대 합: ${result.maxSum} => [${result.subarray}]`);
 
 // 2. 이동 평균 (Moving Average)
 function movingAverage(arr, k) {
@@ -89,7 +89,7 @@ console.log("\n=== 가장 긴 고유 문자열 ===");
 const strings = ["abcabcbb", "bbbbb", "pwwkew", "abcdef"];
 for (const s of strings) {
   const res = longestUniqueSubstring(s);
-  console.log(`  "${s}" → "${res.substring}" (길이: ${res.length})`);
+  console.log(`  "${s}" => "${res.substring}" (길이: ${res.length})`);
 }
 
 // 5. 특정 문자 포함 최소 윈도우
