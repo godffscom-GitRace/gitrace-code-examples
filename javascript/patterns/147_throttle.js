@@ -75,9 +75,9 @@ function simulateThrottle() {
       clearInterval(interval);
       setTimeout(() => {
         console.log(`  쓰로틀 없이: ${withoutThrottle.length}번 실행`);
-        console.log(`    → [${withoutThrottle.join(", ")}]`);
+        console.log(`    => [${withoutThrottle.join(", ")}]`);
         console.log(`  200ms 쓰로틀: ${withThrottle.length}번 실행`);
-        console.log(`    → [${withThrottle.join(", ")}]`);
+        console.log(`    => [${withThrottle.join(", ")}]`);
         showUseCases();
       }, 300);
     }
