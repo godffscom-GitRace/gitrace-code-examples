@@ -16,7 +16,7 @@ console.log("=== Two Sum ===");
 const nums = [2, 7, 11, 15];
 const target = 9;
 const result = twoSum(nums, target);
-console.log(`  [${nums}], target=${target} → [${result}]`);
+console.log(`  [${nums}], target=${target} => [${result}]`);
 console.log(`  ${nums[result[0]]} + ${nums[result[1]]} = ${target}`);
 
 // 2. 빈도수 세기
@@ -32,7 +32,7 @@ console.log("\n=== 빈도수 세기 ===");
 const fruits = ["사과", "바나나", "사과", "딸기", "바나나", "사과"];
 const freq = frequencyCount(fruits);
 for (const [item, count] of freq) {
-  console.log(`  ${item}: ${"★".repeat(count)} (${count}개)`);
+  console.log(`  ${item}: ${"*".repeat(count)} (${count}개)`);
 }
 
 // 3. 가장 많이 등장한 요소
@@ -85,7 +85,7 @@ function longestConsecutive(nums) {
 
 console.log("\n=== 가장 긴 연속 수열 ===");
 const arr = [100, 4, 200, 1, 3, 2];
-console.log(`  [${arr}] → 최대 길이: ${longestConsecutive(arr)} (1,2,3,4)`);
+console.log(`  [${arr}] => 최대 길이: ${longestConsecutive(arr)} (1,2,3,4)`);
 
 // 6. 서로 다른 문자 조합 검사 (isomorphic)
 function isIsomorphic(s, t) {
@@ -105,5 +105,5 @@ function isIsomorphic(s, t) {
 console.log("\n=== 동형 문자열 ===");
 const pairs = [["egg", "add"], ["foo", "bar"], ["paper", "title"]];
 for (const [a, b] of pairs) {
-  console.log(`  "${a}" ↔ "${b}": ${isIsomorphic(a, b) ? "O" : "X"}`);
+  console.log(`  "${a}" <-> "${b}": ${isIsomorphic(a, b) ? "O" : "X"}`);
 }
