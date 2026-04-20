@@ -87,7 +87,7 @@ class LRUCache {
   }
 
   show() {
-    return [...this.cache.entries()].map(([k, v]) => `${k}:${v}`).join(" → ");
+    return [...this.cache.entries()].map(([k, v]) => `${k}:${v}`).join(" -> ");
   }
 }
 
@@ -100,7 +100,7 @@ cache.put("d", 4);  console.log(`  put(d,4): ${cache.show()}`);
 
 // === WeakMap ===
 console.log("\n=== WeakMap ===");
-// WeakMap: 객체만 키, 약한 참조 → GC 허용
+// WeakMap: 객체만 키, 약한 참조 -> GC 허용
 const privateData = new WeakMap();
 
 class User {
