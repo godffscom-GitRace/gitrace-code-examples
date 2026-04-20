@@ -19,9 +19,9 @@ console.log(`배열: [${sorted}]`);
 for (const target of [12, 26, 100]) {
   const result = twoSum(sorted, target);
   if (result) {
-    console.log(`  합=${target} → [${result}] (${sorted[result[0]]}+${sorted[result[1]]})`);
+    console.log(`  합=${target} => [${result}] (${sorted[result[0]]}+${sorted[result[1]]})`);
   } else {
-    console.log(`  합=${target} → 없음`);
+    console.log(`  합=${target} => 없음`);
   }
 }
 
