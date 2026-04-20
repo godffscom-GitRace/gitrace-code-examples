@@ -106,37 +106,3 @@ const info = processText("Hello World JavaScript");
 console.log(`  길이: ${info.length}, 단어: ${info.words}`);
 console.log(`  뒤집기: ${info.reversed}`);
 
-// 메모이제이션 데코레이터 패턴
-console.log("\n=== 통계 포함 메모이제이션 ===");
-function memoizeWithStats(fn) {
-  const cache = new Map();
-  let hits = 0, misses = 0;
-
-  const memoized = function (...args) {
-    const key = JSON.stringify(args);
-    if (cache.has(key)) {
-      hits++;
-      return cache.get(key);
-    }
-    misses++;
-    const result = fn.apply(this, args);
-    cache.set(key, result);
-    return result;
-  };
-
-  memoized.stats = () => ({ hits, misses, cacheSize: cache.size });
-  memoized.clear = () => { cache.clear(); hits = 0; misses = 0; };
-
-  return memoized;
-}
-
-const cachedAdd = memoizeWithStats((a, b) => a + b);
-cachedAdd(1, 2);
-cachedAdd(3, 4);
-cachedAdd(1, 2); // cache hit
-cachedAdd(1, 2); // cache hit
-cachedAdd(5, 6);
-
-const stats = cachedAdd.stats();
-console.log(`  히트: ${stats.hits}, 미스: ${stats.misses}, 캐시: ${stats.cacheSize}개`);
-console.log(`  히트율: ${((stats.hits / (stats.hits + stats.misses)) * 100).toFixed(1)}%`);
