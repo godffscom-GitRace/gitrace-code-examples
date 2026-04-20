@@ -17,8 +17,8 @@ Promise.resolve().then(() => {
 
 console.log("4번: 동기 코드 끝");
 
-// 실행 순서: 1번 → 4번 → 3번 → 2번
-// 동기 코드 → 마이크로태스크 → 매크로태스크
+// 실행 순서: 1번 => 4번 => 3번 => 2번
+// 동기 코드 => 마이크로태스크 => 매크로태스크
 
 // === 태스크 큐 vs 마이크로태스크 큐 ===
 console.log("\n=== 2. 태스크 우선순위 ===");
@@ -32,7 +32,7 @@ Promise.resolve()
 
 Promise.resolve().then(() => console.log("E: Promise 3"));
 
-// 순서: C → E → D → A → B
+// 순서: C => E => D => A => B
 // 마이크로태스크가 모두 처리된 후 매크로태스크 실행
 
 // === setTimeout vs Promise 심화 ===
@@ -40,12 +40,12 @@ console.log("\n=== 3. 중첩 비동기 ===");
 
 setTimeout(() => {
   console.log("timeout 1");
-  Promise.resolve().then(() => console.log("  → promise inside timeout"));
+  Promise.resolve().then(() => console.log("  -> promise inside timeout"));
 }, 0);
 
 Promise.resolve().then(() => {
   console.log("promise 1");
-  setTimeout(() => console.log("  → timeout inside promise"), 0);
+  setTimeout(() => console.log("  -> timeout inside promise"), 0);
 });
 
 // === queueMicrotask ===
@@ -56,7 +56,7 @@ queueMicrotask(() => console.log("마이크로태스크 1"));
 queueMicrotask(() => console.log("마이크로태스크 2"));
 setTimeout(() => console.log("매크로태스크"), 0);
 console.log("끝");
-// 시작 → 끝 → 마이크로태스크1 → 마이크로태스크2 → 매크로태스크
+// 시작 => 끝 => 마이크로태스크1 => 마이크로태스크2 => 매크로태스크
 
 // === 실전 예시: 렌더링과 이벤트 루프 ===
 // 브라우저에서는:
