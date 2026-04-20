@@ -26,7 +26,7 @@ root.right.right = new TreeNode(6);
 root.left.right.left = new TreeNode(7);
 
 // === 재귀 순회 ===
-// 전위 순회 (Pre-order): 루트 → 왼쪽 → 오른쪽
+// 전위 순회 (Pre-order): 루트 -> 왼쪽 -> 오른쪽
 function preorder(node, result = []) {
   if (!node) return result;
   result.push(node.val);
@@ -35,7 +35,7 @@ function preorder(node, result = []) {
   return result;
 }
 
-// 중위 순회 (In-order): 왼쪽 → 루트 → 오른쪽
+// 중위 순회 (In-order): 왼쪽 -> 루트 -> 오른쪽
 function inorder(node, result = []) {
   if (!node) return result;
   inorder(node.left, result);
@@ -44,7 +44,7 @@ function inorder(node, result = []) {
   return result;
 }
 
-// 후위 순회 (Post-order): 왼쪽 → 오른쪽 → 루트
+// 후위 순회 (Post-order): 왼쪽 -> 오른쪽 -> 루트
 function postorder(node, result = []) {
   if (!node) return result;
   postorder(node.left, result);
