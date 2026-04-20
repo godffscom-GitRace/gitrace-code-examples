@@ -47,10 +47,10 @@ for (const [key, value] of params) {
 console.log(`  키: [${[...params.keys()]}]`);
 console.log(`  값: [${[...params.values()]}]`);
 
-// === 객체 ↔ URLSearchParams ===
+// === 객체 <-> URLSearchParams ===
 console.log("\n=== 객체 변환 ===");
 
-// 객체 → URLSearchParams
+// 객체 => URLSearchParams
 function toParams(obj) {
   return new URLSearchParams(
     Object.entries(obj).filter(([, v]) => v !== undefined && v !== null)
@@ -59,9 +59,9 @@ function toParams(obj) {
 
 const filters = { category: "books", minPrice: 10000, maxPrice: 50000, inStock: true };
 const qs = toParams(filters);
-console.log(`  객체 → 쿼리: ${qs.toString()}`);
+console.log(`  객체 => 쿼리: ${qs.toString()}`);
 
-// URLSearchParams → 객체
+// URLSearchParams => 객체
 function toObject(params) {
   const obj = {};
   for (const [key, value] of params) {
@@ -75,7 +75,7 @@ function toObject(params) {
 }
 
 const parsed = toObject(new URLSearchParams("a=1&b=2&c=3&b=4"));
-console.log(`  쿼리 → 객체: ${JSON.stringify(parsed)}`);
+console.log(`  쿼리 => 객체: ${JSON.stringify(parsed)}`);
 
 // === URL 빌더 ===
 console.log("\n=== URL 빌더 ===");
@@ -138,9 +138,3 @@ for (const [key, value] of Object.entries(info)) {
   console.log(`    ${key}: ${JSON.stringify(value)}`);
 }
 
-// === 상대 URL 처리 ===
-console.log("\n=== 상대 URL ===");
-const base = "https://example.com/api/v1/";
-console.log(`  ${new URL("users", base).href}`);
-console.log(`  ${new URL("../v2/posts", base).href}`);
-console.log(`  ${new URL("/absolute", base).href}`);
