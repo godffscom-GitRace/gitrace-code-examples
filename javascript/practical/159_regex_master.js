@@ -86,7 +86,7 @@ const data = { name: "홍길동", age: 28 };
 const result = template.replace(/\{(\w+)\}/g, (match, key) => data[key] || match);
 console.log(`  템플릿: ${result}`);
 
-// 카멜케이스 ↔ 스네이크케이스
+// 카멜케이스 <-> 스네이크케이스
 function camelToSnake(str) {
   return str.replace(/[A-Z]/g, letter => `_${letter.toLowerCase()}`);
 }
