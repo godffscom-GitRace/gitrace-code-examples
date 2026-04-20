@@ -72,7 +72,7 @@ const invalid = ["(]", "({[})", "(()", "abc)"];
 for (const s of invalid) {
   const err = findInvalidPosition(s);
   if (err) {
-    console.log(`  "${s}" → 위치 ${err.index}: ${err.reason}`);
+    console.log(`  "${s}" => 위치 ${err.index}: ${err.reason}`);
   }
 }
 
