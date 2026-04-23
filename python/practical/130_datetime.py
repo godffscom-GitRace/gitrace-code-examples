@@ -1,112 +1,108 @@
 # [130] 날짜와 시간 (Date & Time)
 # 레벨: 3 | datetime 모듈로 날짜/시간을 다루는 방법입니다
 
-from datetime import datetime, date, time, timedelta
+from datetime import datetime, date, timedelta
 import calendar
 
-# === 현재 날짜/시간 ===
-print("=== 현재 날짜/시간 ===")
+
+print("=== NOW ===")
+
 now = datetime.now()
 today = date.today()
-print(f"  현재: {now}")
-print(f"  오늘: {today}")
-print(f"  연: {now.year}, 월: {now.month}, 일: {now.day}")
-print(f"  시: {now.hour}, 분: {now.minute}, 초: {now.second}")
 
-# === 날짜 생성 ===
-print("\n=== 날짜 생성 ===")
+print(now)
+print(today)
+print(now.year, now.month, now.day)
+print(now.hour, now.minute, now.second)
+
+
+print("\n=== CREATE DATE ===")
+
 d1 = date(2026, 2, 17)
-d2 = datetime(2026, 12, 25, 18, 30, 0)
-t1 = time(14, 30, 0)
-print(f"  날짜: {d1}")
-print(f"  날짜시간: {d2}")
-print(f"  시간: {t1}")
+d2 = datetime(2026, 12, 25, 18, 30)
 
-# === 포맷팅 (strftime) ===
-print("\n=== 날짜 포맷팅 ===")
-now = datetime.now()
-formats = {
-    "%Y-%m-%d": "기본",
-    "%Y년 %m월 %d일": "한국식",
-    "%Y/%m/%d %H:%M:%S": "상세",
-    "%A, %B %d, %Y": "영어식",
-    "%p %I시 %M분": "12시간제",
-}
-for fmt, label in formats.items():
-    print(f"  {label}: {now.strftime(fmt)}")
+print(d1)
+print(d2)
 
-# === 파싱 (strptime) ===
-print("\n=== 문자열 → 날짜 ===")
-date_strings = [
-    ("2026-02-17", "%Y-%m-%d"),
-    ("17/02/2026", "%d/%m/%Y"),
-    ("2026년 02월 17일", "%Y년 %m월 %d일"),
+
+print("\n=== FORMAT ===")
+
+fmt_list = [
+    "%Y-%m-%d",
+    "%Y/%m/%d %H:%M",
+    "%Y년 %m월 %d일",
+    "%A"
 ]
-for s, fmt in date_strings:
-    parsed = datetime.strptime(s, fmt)
-    print(f"  '{s}' → {parsed.date()}")
 
-# === 날짜 연산 ===
-print("\n=== 날짜 연산 ===")
+for f in fmt_list:
+    print(now.strftime(f))
+
+
+print("\n=== PARSE ===")
+
+samples = [
+    ("2026-02-17", "%Y-%m-%d"),
+    ("2026/02/17", "%Y/%m/%d")
+]
+
+for s, f in samples:
+    print(datetime.strptime(s, f))
+
+
+print("\n=== DATE MATH ===")
+
 today = date.today()
 
-# timedelta
-future = today + timedelta(days=30)
-past = today - timedelta(weeks=2)
-print(f"  오늘: {today}")
-print(f"  30일 후: {future}")
-print(f"  2주 전: {past}")
+print("today:", today)
+print("+30:", today + timedelta(days=30))
+print("-7:", today - timedelta(days=7))
 
-# 두 날짜 차이
 christmas = date(2026, 12, 25)
-diff = christmas - today
-print(f"  크리스마스까지: {diff.days}일")
+print("D-day:", (christmas - today).days)
 
-# 시간 차이
-start = datetime(2026, 2, 17, 9, 0, 0)
-end = datetime(2026, 2, 17, 17, 30, 0)
-work = end - start
-hours = work.total_seconds() / 3600
-print(f"  근무시간: {work} ({hours}시간)")
 
-# === 요일 ===
-print("\n=== 요일 확인 ===")
-days_kr = ["월", "화", "수", "목", "금", "토", "일"]
-d = date.today()
-print(f"  오늘: {days_kr[d.weekday()]}요일")
+print("\n=== WORK TIME ===")
 
-# 이번 달 달력
-print(f"\n  {d.year}년 {d.month}월 달력:")
-cal = calendar.month(d.year, d.month)
-print(cal)
+start = datetime(2026, 2, 17, 9, 0)
+end = datetime(2026, 2, 17, 18, 0)
 
-# === 활용: 나이 계산 ===
-def calc_age(birth_date):
-    today = date.today()
-    age = today.year - birth_date.year
-    if (today.month, today.day) < (birth_date.month, birth_date.day):
-        age -= 1
-    return age
+diff = end - start
+print(diff)
+print(diff.total_seconds() / 3600)
 
-print("=== 나이 계산 ===")
-birth = date(1995, 8, 15)
-age = calc_age(birth)
-print(f"  생년월일: {birth}")
-print(f"  만 나이: {age}세")
 
-# === 활용: D-Day 계산기 ===
-print("\n=== D-Day 계산기 ===")
+print("\n=== WEEKDAY ===")
+
+days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+
+print(days[date.today().weekday()])
+
+
+print("\n=== CALENDAR ===")
+
+y, m = today.year, today.month
+print(calendar.month(y, m))
+
+
+print("\n=== AGE ===")
+
+def age(birth):
+    t = date.today()
+    a = t.year - birth.year
+    if (t.month, t.day) < (birth.month, birth.day):
+        a -= 1
+    return a
+
+print(age(date(1995, 8, 15)))
+
+
+print("\n=== DDAY ===")
+
 events = {
-    "크리스마스": date(2026, 12, 25),
-    "새해": date(2027, 1, 1),
-    "어린이날": date(2026, 5, 5),
+    "xmas": date(2026, 12, 25),
+    "newyear": date(2027, 1, 1)
 }
-today = date.today()
-for name, d in events.items():
-    diff = (d - today).days
-    if diff > 0:
-        print(f"  {name}: D-{diff}")
-    elif diff == 0:
-        print(f"  {name}: D-Day!")
-    else:
-        print(f"  {name}: D+{abs(diff)}")
+
+for k, v in events.items():
+    d = (v - date.today()).days
+    print(k, d)
