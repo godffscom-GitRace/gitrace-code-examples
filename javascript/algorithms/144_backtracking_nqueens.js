@@ -1,36 +1,25 @@
-// [144] 백트래킹 - N-Queens (Backtracking)
-// 레벨: 5 | 백트래킹으로 N-Queens 문제를 해결합니다
+// Backtracking: N-Queens
 
 function solveNQueens(n) {
   const solutions = [];
   const board = Array.from({ length: n }, () => Array(n).fill("."));
 
   function isSafe(row, col) {
-    // 같은 열 확인
-    for (let i = 0; i < row; i++) {
-      if (board[i][col] === "Q") return false;
-    }
-    // 왼쪽 대각선
-    for (let i = row - 1, j = col - 1; i >= 0 && j >= 0; i--, j--) {
+    for (let i = 0; i < row; i++) if (board[i][col] === "Q") return false;
+    for (let i = row-1, j = col-1; i >= 0 && j >= 0; i--, j--)
       if (board[i][j] === "Q") return false;
-    }
-    // 오른쪽 대각선
-    for (let i = row - 1, j = col + 1; i >= 0 && j < n; i--, j++) {
+    for (let i = row-1, j = col+1; i >= 0 && j < n; i--, j++)
       if (board[i][j] === "Q") return false;
-    }
     return true;
   }
 
   function backtrack(row) {
-    if (row === n) {
-      solutions.push(board.map(r => r.join("")));
-      return;
-    }
+    if (row === n) { solutions.push(board.map(r => r.join(""))); return; }
     for (let col = 0; col < n; col++) {
       if (isSafe(row, col)) {
         board[row][col] = "Q";
         backtrack(row + 1);
-        board[row][col] = "."; // 되돌리기
+        board[row][col] = "."; // undo
       }
     }
   }
@@ -40,79 +29,53 @@ function solveNQueens(n) {
 }
 
 // 4-Queens
-console.log("=== 4-Queens 풀이 ===");
-const solutions4 = solveNQueens(4);
-console.log(`  해의 수: ${solutions4.length}개\n`);
-
-solutions4.forEach((sol, idx) => {
-  console.log(`  풀이 ${idx + 1}:`);
-  sol.forEach(row => {
-    const visual = row.split("").map(c => c === "Q" ? "Q" : ".").join(" ");
-    console.log(`    ${visual}`);
-  });
-  console.log();
+const s4 = solveNQueens(4);
+console.log(`4-Queens: ${s4.length} solutions`);
+s4.forEach((sol, i) => {
+  console.log(`  solution ${i+1}:`);
+  sol.forEach(row => console.log(`    ${row.split("").join(" ")}`));
 });
 
-// N별 해의 개수
-console.log("=== N별 해의 개수 ===");
+// solution count by N
+console.log("\nN-Queens count:");
 for (let n = 1; n <= 8; n++) {
-  const count = solveNQueens(n).length;
-  console.log(`  ${n}-Queens: ${count}개`);
+  console.log(`  ${n}-Queens: ${solveNQueens(n).length}`);
 }
 
-// 부분집합 합 (Subset Sum)
-console.log("\n=== 백트래킹: 부분집합 합 ===");
+// subset sum (backtracking)
 function subsetSum(nums, target) {
   const results = [];
-
-  function backtrack(start, current, sum) {
-    if (sum === target) {
-      results.push([...current]);
-      return;
-    }
-    if (sum > target) return; // 가지치기
-
+  function bt(start, cur, sum) {
+    if (sum === target) { results.push([...cur]); return; }
+    if (sum > target) return;
     for (let i = start; i < nums.length; i++) {
-      current.push(nums[i]);
-      backtrack(i + 1, current, sum + nums[i]);
-      current.pop(); // 되돌리기
+      cur.push(nums[i]);
+      bt(i + 1, cur, sum + nums[i]);
+      cur.pop();
     }
   }
-
-  backtrack(0, [], 0);
+  bt(0, [], 0);
   return results;
 }
 
-const nums = [2, 3, 5, 7, 8];
-const target = 10;
-console.log(`  배열: [${nums}], 목표: ${target}`);
-const subsets = subsetSum(nums, target);
-for (const s of subsets) {
-  console.log(`    [${s}] = ${s.reduce((a, b) => a + b, 0)}`);
-}
+console.log("\nsubset sum ([2,3,5,7,8], target=10):");
+subsetSum([2, 3, 5, 7, 8], 10).forEach(s => console.log(`  [${s}]`));
 
-// 순열 생성 (백트래킹)
-console.log("\n=== 백트래킹: 순열 ===");
+// permutations
 function permutations(arr) {
   const results = [];
-
-  function backtrack(current, remaining) {
-    if (remaining.length === 0) {
-      results.push([...current]);
-      return;
-    }
-    for (let i = 0; i < remaining.length; i++) {
-      current.push(remaining[i]);
-      backtrack(current, [...remaining.slice(0, i), ...remaining.slice(i + 1)]);
-      current.pop();
+  function bt(cur, rem) {
+    if (!rem.length) { results.push([...cur]); return; }
+    for (let i = 0; i < rem.length; i++) {
+      cur.push(rem[i]);
+      bt(cur, [...rem.slice(0,i), ...rem.slice(i+1)]);
+      cur.pop();
     }
   }
-
-  backtrack([], arr);
+  bt([], arr);
   return results;
 }
 
 const perms = permutations([1, 2, 3]);
-console.log(`  [1,2,3] 순열 (${perms.length}개):`);
-perms.forEach(p => console.log(`    [${p}]`));
-
+console.log(`\npermutations([1,2,3]) — ${perms.length} total:`);
+perms.forEach(p => console.log(`  [${p}]`));
