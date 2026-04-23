@@ -3,7 +3,7 @@
 
 from abc import ABC, abstractmethod
 
-# 커맨드 인터페이스
+
 class Command(ABC):
     @abstractmethod
     def execute(self):
@@ -13,23 +13,20 @@ class Command(ABC):
     def undo(self):
         pass
 
-# 리시버 - 텍스트 에디터
+
 class TextEditor:
     def __init__(self):
         self.text = ""
 
-    def insert(self, text):
-        self.text += text
+    def insert(self, t):
+        self.text += t
 
-    def delete(self, count):
-        removed = self.text[-count:]
-        self.text = self.text[:-count]
+    def delete(self, n):
+        removed = self.text[-n:]
+        self.text = self.text[:-n]
         return removed
 
-    def __str__(self):
-        return f'"{self.text}"'
 
-# 구체적 커맨드들
 class InsertCommand(Command):
     def __init__(self, editor, text):
         self.editor = editor
@@ -41,147 +38,142 @@ class InsertCommand(Command):
     def undo(self):
         self.editor.delete(len(self.text))
 
+
 class DeleteCommand(Command):
-    def __init__(self, editor, count):
+    def __init__(self, editor, n):
         self.editor = editor
-        self.count = count
-        self.deleted = ""
+        self.n = n
+        self.removed = ""
 
     def execute(self):
-        self.deleted = self.editor.delete(self.count)
+        self.removed = self.editor.delete(self.n)
 
     def undo(self):
-        self.editor.insert(self.deleted)
+        self.editor.insert(self.removed)
 
-# 인보커 - 커맨드 관리자
-class CommandManager:
+
+class Manager:
     def __init__(self):
         self.history = []
-        self.redo_stack = []
+        self.redo = []
 
-    def execute(self, command):
-        command.execute()
-        self.history.append(command)
-        self.redo_stack.clear()
+    def run(self, cmd):
+        cmd.execute()
+        self.history.append(cmd)
+        self.redo.clear()
 
     def undo(self):
-        if not self.history:
-            print("  되돌릴 작업이 없습니다")
-            return
-        command = self.history.pop()
-        command.undo()
-        self.redo_stack.append(command)
+        if self.history:
+            cmd = self.history.pop()
+            cmd.undo()
+            self.redo.append(cmd)
 
     def redo(self):
-        if not self.redo_stack:
-            print("  다시 실행할 작업이 없습니다")
-            return
-        command = self.redo_stack.pop()
-        command.execute()
-        self.history.append(command)
+        if self.redo:
+            cmd = self.redo.pop()
+            cmd.execute()
+            self.history.append(cmd)
 
-# 사용
-print("=== 커맨드 패턴 - 텍스트 에디터 ===")
+
+print("=== COMMAND TEXT EDITOR ===")
+
 editor = TextEditor()
-manager = CommandManager()
+m = Manager()
 
-# 텍스트 입력
-manager.execute(InsertCommand(editor, "Hello"))
-print(f"  입력 후: {editor}")
+m.run(InsertCommand(editor, "Hello"))
+m.run(InsertCommand(editor, " World"))
+m.run(InsertCommand(editor, "!"))
 
-manager.execute(InsertCommand(editor, " World"))
-print(f"  입력 후: {editor}")
+print(editor.text)
 
-manager.execute(InsertCommand(editor, "!"))
-print(f"  입력 후: {editor}")
+m.undo()
+print(editor.text)
 
-# Undo
-print("\n--- Undo ---")
-manager.undo()
-print(f"  Undo 1: {editor}")
-manager.undo()
-print(f"  Undo 2: {editor}")
+m.undo()
+print(editor.text)
 
-# Redo
-print("\n--- Redo ---")
-manager.redo()
-print(f"  Redo: {editor}")
+m.redo()
+print(editor.text)
 
-# 삭제 후 Undo
-manager.execute(DeleteCommand(editor, 5))
-print(f"\n5글자 삭제: {editor}")
-manager.undo()
-print(f"삭제 Undo: {editor}")
+m.run(DeleteCommand(editor, 6))
+print(editor.text)
 
-# 매크로 커맨드 (여러 커맨드를 하나로 묶기)
-class MacroCommand(Command):
-    def __init__(self, commands):
-        self.commands = commands
+m.undo()
+print(editor.text)
+
+
+class Macro(Command):
+    def __init__(self, cmds):
+        self.cmds = cmds
 
     def execute(self):
-        for cmd in self.commands:
-            cmd.execute()
+        for c in self.cmds:
+            c.execute()
 
     def undo(self):
-        for cmd in reversed(self.commands):
-            cmd.undo()
+        for c in reversed(self.cmds):
+            c.undo()
 
-print("\n=== 매크로 커맨드 ===")
+
+print("\n=== MACRO ===")
+
 editor2 = TextEditor()
-manager2 = CommandManager()
+m2 = Manager()
 
-# "Python" 입력을 매크로로
-macro = MacroCommand([
+macro = Macro([
     InsertCommand(editor2, "Py"),
-    InsertCommand(editor2, "th"),
-    InsertCommand(editor2, "on"),
+    InsertCommand(editor2, "thon")
 ])
 
-manager2.execute(macro)
-print(f"  매크로 실행: {editor2}")
-manager2.undo()
-print(f"  매크로 Undo: {editor2}")
+m2.run(macro)
+print(editor2.text)
 
-# 계산기 예제
-print("\n=== 커맨드 패턴 - 계산기 ===")
+m2.undo()
+print(editor2.text)
+
 
 class Calculator:
     def __init__(self):
-        self.value = 0
+        self.v = 0
 
-class AddCommand(Command):
-    def __init__(self, calc, amount):
+
+class Add(Command):
+    def __init__(self, calc, n):
         self.calc = calc
-        self.amount = amount
+        self.n = n
 
     def execute(self):
-        self.calc.value += self.amount
+        self.calc.v += self.n
 
     def undo(self):
-        self.calc.value -= self.amount
+        self.calc.v -= self.n
 
-class MultiplyCommand(Command):
-    def __init__(self, calc, factor):
+
+class Mul(Command):
+    def __init__(self, calc, n):
         self.calc = calc
-        self.factor = factor
+        self.n = n
 
     def execute(self):
-        self.calc.value *= self.factor
+        self.calc.v *= self.n
 
     def undo(self):
-        self.calc.value //= self.factor
+        self.calc.v //= self.n
+
+
+print("\n=== CALCULATOR ===")
 
 calc = Calculator()
-mgr = CommandManager()
+m3 = Manager()
 
-mgr.execute(AddCommand(calc, 10))
-print(f"  +10 = {calc.value}")
-mgr.execute(MultiplyCommand(calc, 3))
-print(f"  ×3  = {calc.value}")
-mgr.execute(AddCommand(calc, 5))
-print(f"  +5  = {calc.value}")
+m3.run(Add(calc, 10))
+m3.run(Mul(calc, 3))
+m3.run(Add(calc, 5))
 
-mgr.undo()
-print(f"  Undo = {calc.value}")
-mgr.undo()
-print(f"  Undo = {calc.value}")
+print(calc.v)
+
+m3.undo()
+print(calc.v)
+
+m3.undo()
+print(calc.v)
