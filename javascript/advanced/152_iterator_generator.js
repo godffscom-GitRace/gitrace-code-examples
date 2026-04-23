@@ -1,66 +1,37 @@
-// [152] Iterator와 Generator (Iterator & Generator)
-// 레벨: 5 | Generator로 커스텀 반복 가능 객체를 만듭니다
+// Iterator & Generator
 
-// === Iterator 프로토콜 ===
-console.log("=== 커스텀 Iterator ===");
-
+// custom iterator protocol
 function createCounter(start, end) {
   return {
     [Symbol.iterator]() {
-      let current = start;
-      return {
-        next() {
-          if (current <= end) {
-            return { value: current++, done: false };
-          }
-          return { done: true };
-        }
-      };
+      let cur = start;
+      return { next() { return cur <= end ? { value: cur++, done: false } : { done: true }; } };
     }
   };
 }
 
-const counter = createCounter(1, 5);
-console.log(`  for...of: [${[...counter]}]`);
+console.log([...createCounter(1, 5)]); // [1,2,3,4,5]
 
-// 수동 반복
-const iter = createCounter(10, 12)[Symbol.iterator]();
-console.log(`  next(): ${JSON.stringify(iter.next())}`);
-console.log(`  next(): ${JSON.stringify(iter.next())}`);
-console.log(`  next(): ${JSON.stringify(iter.next())}`);
-console.log(`  next(): ${JSON.stringify(iter.next())}`);
-
-// === Generator 기본 ===
-console.log("\n=== Generator 기본 ===");
-
-function* numberGenerator() {
+// generator basics
+function* numGen() {
   yield 1;
   yield 2;
   yield 3;
 }
 
-const gen = numberGenerator();
-console.log(`  ${JSON.stringify(gen.next())}`);
-console.log(`  ${JSON.stringify(gen.next())}`);
-console.log(`  ${JSON.stringify(gen.next())}`);
-console.log(`  ${JSON.stringify(gen.next())}`);
+const gen = numGen();
+console.log(gen.next()); // {value:1, done:false}
+console.log(gen.next()); // {value:2, done:false}
+console.log(gen.next()); // {value:3, done:false}
+console.log(gen.next()); // {value:undefined, done:true}
+console.log([...numGen()]); // [1,2,3]
 
-// spread, 구조분해
-console.log(`  spread: [${[...numberGenerator()]}]`);
-const [a, b] = numberGenerator();
-console.log(`  구조분해: a=${a}, b=${b}`);
-
-// === 무한 시퀀스 ===
-console.log("\n=== 무한 시퀀스 ===");
-
+// infinite sequence with take helper
 function* infiniteCounter(start = 0) {
   let n = start;
-  while (true) {
-    yield n++;
-  }
+  while (true) yield n++;
 }
 
-// take 유틸리티
 function take(gen, count) {
   const result = [];
   for (const val of gen) {
@@ -70,62 +41,33 @@ function take(gen, count) {
   return result;
 }
 
-console.log(`  무한 카운터(0~): [${take(infiniteCounter(), 5)}]`);
-console.log(`  무한 카운터(100~): [${take(infiniteCounter(100), 3)}]`);
+console.log(take(infiniteCounter(), 5));    // [0,1,2,3,4]
 
-// 피보나치 무한 생성
+// fibonacci generator
 function* fibonacci() {
   let a = 0, b = 1;
-  while (true) {
-    yield a;
-    [a, b] = [b, a + b];
-  }
+  while (true) { yield a; [a, b] = [b, a + b]; }
 }
+console.log(take(fibonacci(), 8)); // [0,1,1,2,3,5,8,13]
 
-console.log(`  피보나치: [${take(fibonacci(), 10)}]`);
-
-// === yield로 값 주고받기 ===
-console.log("\n=== yield 양방향 통신 ===");
-
+// two-way communication via yield
 function* conversation() {
-  const name = yield "이름이 무엇인가요?";
-  const age = yield `${name}님, 나이가 어떻게 되나요?`;
-  yield `${name}님은 ${age}살이군요!`;
+  const name = yield "What is your name?";
+  const age  = yield `${name}, how old are you?`;
+  yield `${name} is ${age} years old!`;
 }
 
 const chat = conversation();
-console.log(`  Q: ${chat.next().value}`);
-console.log(`  Q: ${chat.next("홍길동").value}`);
-console.log(`  A: ${chat.next(25).value}`);
+console.log(chat.next().value);
+console.log(chat.next("Alice").value);
+console.log(chat.next(25).value);
 
-// === yield* 위임 ===
-console.log("\n=== yield* 위임 ===");
-
-function* inner() {
-  yield "a";
-  yield "b";
-}
-
-function* outer() {
-  yield 1;
-  yield* inner();  // inner에 위임
-  yield 2;
-}
-
-console.log(`  위임: [${[...outer()]}]`);
-
-// === 실전: ID 생성기 ===
-console.log("\n=== 실전: ID 생성기 ===");
-
+// unique ID generator
 function* idGenerator(prefix = "ID") {
   let id = 1;
-  while (true) {
-    yield `${prefix}-${String(id++).padStart(4, "0")}`;
-  }
+  while (true) yield `${prefix}-${String(id++).padStart(4, "0")}`;
 }
 
 const userIds = idGenerator("USER");
-const orderIds = idGenerator("ORD");
-console.log(`  ${userIds.next().value}`);
-console.log(`  ${userIds.next().value}`);
-console.log(`  ${orderIds.next().value}`);
+console.log(userIds.next().value); // USER-0001
+console.log(userIds.next().value); // USER-0002
