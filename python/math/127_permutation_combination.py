@@ -1,52 +1,80 @@
-# [127] 순열과 조합 (Permutations & Combinations)
-# 레벨: 3 | 순서가 있는 순열과 순서가 없는 조합을 구현합니다
+# [117] 싱글톤 패턴 (Singleton Pattern)
+# 레벨: 4 | 클래스의 인스턴스가 하나만 존재하도록 보장하는 패턴입니다
 
-from itertools import permutations, combinations, product
-import math
+# 방법 1: __new__ 오버라이드
+class Singleton:
+    _instance = None
 
-def my_permutations(arr, r):
-    if r == 0:
-        return [[]]
-    result = []
-    for i in range(len(arr)):
-        for p in my_permutations(arr[:i] + arr[i+1:], r-1):
-            result.append([arr[i]] + p)
-    return result
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
-def my_combinations(arr, r):
-    if r == 0:
-        return [[]]
-    if len(arr) < r:
-        return []
-    first = arr[0]
-    rest = arr[1:]
-    return [[first] + c for c in my_combinations(rest, r-1)] + my_combinations(rest, r)
+    def __init__(self, value=None):
+        if not hasattr(self, "initialized"):
+            self.value = value
+            self.initialized = True
 
-print("=== PERMUTATION ===")
-items = ["A", "B", "C"]
-for p in my_permutations(items, 2):
-    print(p)
 
-print("\nitertools:", list(permutations(items, 2)))
+print("=== SINGLETON ===")
+a = Singleton("FIRST")
+b = Singleton("SECOND")
 
-print("\n=== COMBINATION ===")
-items2 = ["A", "B", "C", "D"]
-for c in my_combinations(items2, 2):
-    print(c)
+print(a.value)
+print(b.value)
+print(a is b)
 
-print("\nitertools:", list(combinations(items2, 2)))
 
-print("\n=== FORMULA ===")
-n, r = 5, 3
-print("nPr =", math.perm(n, r))
-print("nCr =", math.comb(n, r))
+def singleton(cls):
+    instances = {}
 
-print("\n=== PRODUCT ===")
-items3 = [1, 2, 3]
-for p in product(items3, repeat=2):
-    print(list(p))
+    def wrapper(*args, **kwargs):
+        if cls not in instances:
+            instances[cls] = cls(*args, **kwargs)
+        return instances[cls]
 
-print("\n=== CASES ===")
-print("Lottery:", math.comb(45, 6))
-print("Password:", 10**4)
-print("AlphaNum:", 62**8)
+    return wrapper
+
+
+@singleton
+class Database:
+    def __init__(self, host="localhost"):
+        self.host = host
+        self.connected = False
+
+
+print("\n=== DECORATOR ===")
+db1 = Database("mysql.server.com")
+db2 = Database("other.server.com")
+
+print(db1 is db2)
+print(db1.host)
+
+
+class SingletonMeta(type):
+    _instances = {}
+
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super().__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class AppConfig(metaclass=SingletonMeta):
+    def __init__(self):
+        self.data = {}
+
+    def set(self, k, v):
+        self.data[k] = v
+
+    def get(self, k):
+        return self.data.get(k)
+
+
+print("\n=== METACLASS ===")
+c1 = AppConfig()
+c1.set("mode", "dark")
+c2 = AppConfig()
+
+print(c1 is c2)
+print(c2.get("mode"))
