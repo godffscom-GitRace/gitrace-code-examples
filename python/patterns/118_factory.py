@@ -3,151 +3,132 @@
 
 from abc import ABC, abstractmethod
 
-# 제품 인터페이스
 class Animal(ABC):
     @abstractmethod
     def speak(self):
         pass
 
-    @abstractmethod
-    def info(self):
-        pass
 
-# 구체적 제품들
 class Dog(Animal):
     def __init__(self, name):
         self.name = name
 
     def speak(self):
-        return f"{self.name}: 멍멍!"
+        return self.name + " bark"
 
-    def info(self):
-        return f"개 - {self.name}"
 
 class Cat(Animal):
     def __init__(self, name):
         self.name = name
 
     def speak(self):
-        return f"{self.name}: 야옹~"
+        return self.name + " meow"
 
-    def info(self):
-        return f"고양이 - {self.name}"
 
 class Bird(Animal):
     def __init__(self, name):
         self.name = name
 
     def speak(self):
-        return f"{self.name}: 짹짹!"
+        return self.name + " chirp"
 
-    def info(self):
-        return f"새 - {self.name}"
 
-# 심플 팩토리
 class AnimalFactory:
     @staticmethod
-    def create(animal_type, name):
-        factories = {
+    def create(kind, name):
+        mapping = {
             "dog": Dog,
             "cat": Cat,
-            "bird": Bird,
+            "bird": Bird
         }
-        cls = factories.get(animal_type.lower())
-        if cls is None:
-            raise ValueError(f"알 수 없는 동물: {animal_type}")
-        return cls(name)
+        if kind not in mapping:
+            raise ValueError("unknown animal")
+        return mapping[kind](name)
 
-print("=== 심플 팩토리 ===")
+
+print("=== SIMPLE FACTORY ===")
 animals = [
-    AnimalFactory.create("dog", "바둑이"),
-    AnimalFactory.create("cat", "나비"),
-    AnimalFactory.create("bird", "짹짹이"),
+    AnimalFactory.create("dog", "A"),
+    AnimalFactory.create("cat", "B"),
+    AnimalFactory.create("bird", "C"),
 ]
-for animal in animals:
-    print(f"  {animal.info()} → {animal.speak()}")
 
-# 팩토리 메서드 패턴
+for a in animals:
+    print(a.speak())
+
+
 class Document(ABC):
     @abstractmethod
     def render(self):
         pass
 
-class PDFDocument(Document):
-    def render(self):
-        return "PDF 문서 렌더링"
 
-class HTMLDocument(Document):
+class PDF(Document):
     def render(self):
-        return "HTML 문서 렌더링"
+        return "PDF"
 
-class MarkdownDocument(Document):
+
+class HTML(Document):
     def render(self):
-        return "Markdown 문서 렌더링"
+        return "HTML"
 
-class DocumentCreator(ABC):
+
+class Creator(ABC):
     @abstractmethod
-    def create_document(self):
+    def create(self):
         pass
 
-    def process(self):
-        doc = self.create_document()
-        return doc.render()
+    def run(self):
+        return self.create().render()
 
-class PDFCreator(DocumentCreator):
-    def create_document(self):
-        return PDFDocument()
 
-class HTMLCreator(DocumentCreator):
-    def create_document(self):
-        return HTMLDocument()
+class PDFCreator(Creator):
+    def create(self):
+        return PDF()
 
-class MarkdownCreator(DocumentCreator):
-    def create_document(self):
-        return MarkdownDocument()
 
-print("\n=== 팩토리 메서드 ===")
-creators = [PDFCreator(), HTMLCreator(), MarkdownCreator()]
-for creator in creators:
-    print(f"  {creator.process()}")
+class HTMLCreator(Creator):
+    def create(self):
+        return HTML()
 
-# 추상 팩토리 - UI 테마
+
+print("\n=== FACTORY METHOD ===")
+for c in [PDFCreator(), HTMLCreator()]:
+    print(c.run())
+
+
 class Button(ABC):
     @abstractmethod
-    def click(self): pass
+    def click(self):
+        pass
 
-class TextBox(ABC):
-    @abstractmethod
-    def input(self, text): pass
 
 class DarkButton(Button):
-    def click(self): return "[Dark 버튼] 클릭"
+    def click(self):
+        return "dark click"
 
-class DarkTextBox(TextBox):
-    def input(self, text): return f"[Dark 입력] {text}"
 
 class LightButton(Button):
-    def click(self): return "[Light 버튼] 클릭"
+    def click(self):
+        return "light click"
 
-class LightTextBox(TextBox):
-    def input(self, text): return f"[Light 입력] {text}"
 
 class UIFactory(ABC):
     @abstractmethod
-    def create_button(self): pass
-    @abstractmethod
-    def create_textbox(self): pass
+    def create_button(self):
+        pass
 
-class DarkThemeFactory(UIFactory):
-    def create_button(self): return DarkButton()
-    def create_textbox(self): return DarkTextBox()
 
-class LightThemeFactory(UIFactory):
-    def create_button(self): return LightButton()
-    def create_textbox(self): return LightTextBox()
+class DarkFactory(UIFactory):
+    def create_button(self):
+        return DarkButton()
 
-print("\n=== 추상 팩토리 (UI 테마) ===")
-for factory in [DarkThemeFactory(), LightThemeFactory()]:
-    btn = factory.create_button()
-    txt = factory.create_textbox()
-    print(f"  {btn.click()} | {txt.input('안녕하세요')}")
+
+class LightFactory(UIFactory):
+    def create_button(self):
+        return LightButton()
+
+
+print("\n=== ABSTRACT FACTORY ===")
+for f in [DarkFactory(), LightFactory()]:
+    print(f.create_button().click())
