@@ -3,52 +3,30 @@
 
 import time
 
-# 함수를 인자로 받는 함수
-def my_decorator(func):
-    def wrapper(*args, **kwargs):
-        print(f"[{func.__name__}] 실행 전")
+def log(func):
+    def wrap(*args, **kwargs):
+        print("start")
         result = func(*args, **kwargs)
-        print(f"[{func.__name__}] 실행 후")
+        print("end")
         return result
-    return wrapper
+    return wrap
 
-# @decorator 문법
-@my_decorator
-def say_hello(name):
-    print(f"안녕하세요, {name}님!")
+@log
+def hello(name):
+    print(f"Hello, {name}")
 
-say_hello("철수")
+hello("Tom")
 
-# 실행 시간 측정 데코레이터
 def timer(func):
-    def wrapper(*args, **kwargs):
-        start = time.time()
+    def wrap(*args, **kwargs):
+        t = time.time()
         result = func(*args, **kwargs)
-        end = time.time()
-        print(f"[{func.__name__}] 실행 시간: {end - start:.4f}초")
+        print("time:", round(time.time() - t, 4))
         return result
-    return wrapper
+    return wrap
 
 @timer
-def slow_sum(n):
+def work(n):
     return sum(range(n))
 
-print(f"결과: {slow_sum(1000000)}")
-
-# 횟수 카운터 데코레이터 (클로저 활용)
-def counter(func):
-    count = 0
-    def wrapper(*args, **kwargs):
-        nonlocal count
-        count += 1
-        print(f"[{func.__name__}] {count}번째 호출")
-        return func(*args, **kwargs)
-    return wrapper
-
-@counter
-def greet(name):
-    return f"Hello, {name}!"
-
-print(greet("A"))
-print(greet("B"))
-print(greet("C"))
+print("result:", work(10000))
