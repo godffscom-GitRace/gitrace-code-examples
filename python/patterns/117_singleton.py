@@ -5,52 +5,52 @@
 class Singleton:
     _instance = None
 
-    def __new__(cls, *args, **kwargs):
+    def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
         return cls._instance
 
     def __init__(self, value=None):
-        if not hasattr(self, '_initialized'):
+        if not hasattr(self, "initialized"):
             self.value = value
-            self._initialized = True
+            self.initialized = True
 
-# 테스트
-a = Singleton("첫 번째")
-b = Singleton("두 번째")
 
-print("=== 싱글톤 패턴 ===")
-print(f"a.value = {a.value}")  # 첫 번째
-print(f"b.value = {b.value}")  # 첫 번째 (같은 인스턴스)
-print(f"a is b: {a is b}")    # True
+print("=== SINGLETON ===")
+a = Singleton("FIRST")
+b = Singleton("SECOND")
 
-# 방법 2: 데코레이터 활용
+print(a.value)
+print(b.value)
+print(a is b)
+
+
 def singleton(cls):
     instances = {}
-    def get_instance(*args, **kwargs):
+
+    def wrapper(*args, **kwargs):
         if cls not in instances:
             instances[cls] = cls(*args, **kwargs)
         return instances[cls]
-    return get_instance
+
+    return wrapper
+
 
 @singleton
 class Database:
     def __init__(self, host="localhost"):
         self.host = host
         self.connected = False
-        print(f"  DB 인스턴스 생성: {host}")
 
-    def connect(self):
-        self.connected = True
-        print(f"  {self.host} 연결 완료")
 
-print("\n=== 데코레이터 싱글톤 ===")
+print("\n=== DECORATOR ===")
 db1 = Database("mysql.server.com")
-db2 = Database("other.server.com")  # 생성 안 됨
-print(f"db1 is db2: {db1 is db2}")  # True
-print(f"host: {db1.host}")          # mysql.server.com
+db2 = Database("other.server.com")
 
-# 방법 3: 메타클래스
+print(db1 is db2)
+print(db1.host)
+
+
 class SingletonMeta(type):
     _instances = {}
 
@@ -59,40 +59,22 @@ class SingletonMeta(type):
             cls._instances[cls] = super().__call__(*args, **kwargs)
         return cls._instances[cls]
 
+
 class AppConfig(metaclass=SingletonMeta):
     def __init__(self):
-        self.settings = {}
+        self.data = {}
 
-    def set(self, key, value):
-        self.settings[key] = value
+    def set(self, k, v):
+        self.data[k] = v
 
-    def get(self, key):
-        return self.settings.get(key)
+    def get(self, k):
+        return self.data.get(k)
 
-print("\n=== 메타클래스 싱글톤 ===")
-config1 = AppConfig()
-config1.set("theme", "dark")
-config2 = AppConfig()
-print(f"config1 is config2: {config1 is config2}")  # True
-print(f"theme: {config2.get('theme')}")              # dark
 
-# 활용: 로거
-print("\n=== 싱글톤 로거 ===")
+print("\n=== METACLASS ===")
+c1 = AppConfig()
+c1.set("mode", "dark")
+c2 = AppConfig()
 
-@singleton
-class Logger:
-    def __init__(self):
-        self.logs = []
-
-    def log(self, message):
-        self.logs.append(message)
-        print(f"  [LOG] {message}")
-
-    def show_all(self):
-        print(f"  총 {len(self.logs)}개 로그")
-
-logger1 = Logger()
-logger1.log("앱 시작")
-logger2 = Logger()
-logger2.log("사용자 로그인")
-logger1.show_all()  # 2개 (같은 인스턴스)
+print(c1 is c2)
+print(c2.get("mode"))
