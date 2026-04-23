@@ -1,38 +1,39 @@
 # [10] 파일 읽기/쓰기 - File I/O
 # 레벨: 3 | 파일을 읽고 쓰는 방법을 배웁니다
 
-# write() - 파일 쓰기
+# Simple File I/O Practice
+
+print("📝 Memo App\n")
+
+# 1. Write file
 with open("memo.txt", "w", encoding="utf-8") as f:
-    f.write("첫 번째 메모입니다.\n")
-    f.write("두 번째 메모입니다.\n")
-    f.write("세 번째 메모입니다.\n")
+    f.write("Hello Memo\n")
+    f.write("Python File I/O\n")
 
-print("메모 저장 완료!")
+print("Saved!\n")
 
-# read() - 전체 읽기
+# 2. Read file
 with open("memo.txt", "r", encoding="utf-8") as f:
     content = f.read()
-    print("=== 전체 읽기 ===")
-    print(content)
 
-# readline() - 한 줄씩 읽기
-with open("memo.txt", "r", encoding="utf-8") as f:
-    print("=== 한 줄씩 읽기 ===")
-    line = f.readline()
-    while line:
-        print(line.strip())
-        line = f.readline()
+print("📄 Content:")
+print(content)
 
-# readlines() - 리스트로 읽기
-with open("memo.txt", "r", encoding="utf-8") as f:
-    lines = f.readlines()
-    print(f"\n총 {len(lines)}줄")
-
-# writelines() - 여러 줄 쓰기
-new_memos = ["메모 A\n", "메모 B\n", "메모 C\n"]
+# 3. Append file
 with open("memo.txt", "a", encoding="utf-8") as f:
-    f.writelines(new_memos)
+    f.write("New line added\n")
 
-# with 문 사용 - 자동으로 파일 닫기 처리
-# with 없이 사용하면 f.close()를 직접 호출해야 함
-print("파일 작업 완료!")
+print("Added new line!\n")
+
+# 4. Read again
+with open("memo.txt", "r", encoding="utf-8") as f:
+    print("📄 Updated Content:")
+    print(f.read())
+
+print("\n🎯 Your turn!")
+text = input("Write memo: ")
+
+with open("memo.txt", "a", encoding="utf-8") as f:
+    f.write(text + "\n")
+
+print("Saved your memo!")
