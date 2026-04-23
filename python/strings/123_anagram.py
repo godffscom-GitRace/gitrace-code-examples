@@ -4,15 +4,15 @@
 from collections import Counter
 
 
-print("=== ANAGRAM CHECK ===")
-
-def a_sort(a, b):
+def is_anagram_sort(a, b):
     return sorted(a.replace(" ", "").lower()) == sorted(b.replace(" ", "").lower())
 
-def a_count(a, b):
+
+def is_anagram_counter(a, b):
     return Counter(a.replace(" ", "").lower()) == Counter(b.replace(" ", "").lower())
 
-def a_dict(a, b):
+
+def is_anagram_dict(a, b):
     a = a.replace(" ", "").lower()
     b = b.replace(" ", "").lower()
 
@@ -35,12 +35,14 @@ def a_dict(a, b):
 pairs = [
     ("listen", "silent"),
     ("hello", "world"),
-    ("Dormitory", "Dirty Room"),
     ("python", "typhon"),
+    ("astronomer", "moon starer"),
 ]
 
+print("=== ANAGRAM CHECK ===")
+
 for a, b in pairs:
-    print(a, b, a_count(a, b))
+    print(a, b, is_anagram_counter(a, b))
 
 
 print("\n=== GROUP ANAGRAM ===")
@@ -58,24 +60,13 @@ for g in groups.values():
         print(g)
 
 
-print("\n=== KOREAN ===")
-
-kr = [
-    ("가나다", "다나가"),
-    ("파이썬", "썬파이"),
-]
-
-for a, b in kr:
-    print(a, b, a_count(a, b))
-
-
 print("\n=== SUBSTRING ANAGRAM ===")
 
 text = "cbaebabacd"
-pat = "abc"
+pattern = "abc"
 
-pc = Counter(pat)
-n = len(pat)
+pc = Counter(pattern)
+n = len(pattern)
 
 for i in range(len(text) - n + 1):
     sub = text[i:i+n]
