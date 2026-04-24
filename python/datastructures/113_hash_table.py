@@ -31,7 +31,7 @@ class HashTable:
         return None
 
 
-print("⚡ Hash Game\n")
+print("⚡ Hash Game \n")
 
 ht = HashTable()
 
@@ -39,13 +39,13 @@ ht.put("A", 10)
 ht.put("B", 20)
 ht.put("C", 30)
 
-print("\nGet A:", ht.get("A"))
+print("\n Get A:", ht.get("A"))
 
 ht.put("A", 99)
 
 print("Get A after update:", ht.get("A"))
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 key = input("Enter key: ")
 value = int(input("Enter value: "))
 ht.put(key, value)
