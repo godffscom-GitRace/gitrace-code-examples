@@ -24,7 +24,7 @@ class MinHeap:
         return self.heap[0]
 
 
-print("📊 Heap Game\n")
+print("📊 Heap Game \n")
 
 h = MinHeap()
 
@@ -33,14 +33,14 @@ h.insert(2)
 h.insert(8)
 h.insert(1)
 
-print("\nTop:", h.peek())
+print("\n Top:", h.peek())
 
 h.extract_min()
 h.extract_min()
 
-print("\nTop after remove:", h.peek())
+print("\n Top after remove:", h.peek())
 
-print("\n🎯 Priority Task")
+print("\n Priority Task")
 
 h.insert(int(input("Enter number: ")))
 print("Current top:", h.peek())
