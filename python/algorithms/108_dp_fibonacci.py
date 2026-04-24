@@ -14,11 +14,11 @@ def fib(n):
     return curr
 
 
-print("🚀 Fibonacci Game\n")
+print("Fibonacci Game\n")
 
 for i in range(1, 8):
     print(f"F({i}) = {fib(i)}")
 
-print("\n🎯 Challenge!")
+print("\n Challenge!")
 num = int(input("Enter a number: "))
 print(f"Result: F({num}) = {fib(num)}")
