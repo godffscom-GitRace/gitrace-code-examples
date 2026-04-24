@@ -3,7 +3,7 @@
 
 # Simple File I/O Practice
 
-print("📝 Memo App\n")
+print("Memo App\n")
 
 # 1. Write file
 with open("memo.txt", "w", encoding="utf-8") as f:
@@ -16,7 +16,7 @@ print("Saved!\n")
 with open("memo.txt", "r", encoding="utf-8") as f:
     content = f.read()
 
-print("📄 Content:")
+print("Content:")
 print(content)
 
 # 3. Append file
@@ -27,10 +27,10 @@ print("Added new line!\n")
 
 # 4. Read again
 with open("memo.txt", "r", encoding="utf-8") as f:
-    print("📄 Updated Content:")
+    print("Updated Content:")
     print(f.read())
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 text = input("Write memo: ")
 
 with open("memo.txt", "a", encoding="utf-8") as f:
