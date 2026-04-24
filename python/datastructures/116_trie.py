@@ -53,7 +53,7 @@ class Trie:
         return words
 
 
-print("🔤 Trie Game\n")
+print("Trie Game \n")
 
 trie = Trie()
 
@@ -65,10 +65,10 @@ for w in words:
 print("Search app:", trie.search("app"))
 print("Search ape:", trie.search("ape"))
 
-print("\nAutocomplete app:", trie.autocomplete("app"))
+print("\n Autocomplete app:", trie.autocomplete("app"))
 print("Autocomplete ba:", trie.autocomplete("ba"))
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 word = input("Enter word: ")
 trie.insert(word)
 
