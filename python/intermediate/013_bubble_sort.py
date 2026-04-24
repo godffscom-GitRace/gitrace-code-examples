@@ -20,7 +20,7 @@ def bubble_sort(arr):
     return arr
 
 
-print("🔢 Bubble Sort Game\n")
+print("Bubble Sort Game\n")
 
 numbers = [5, 3, 8, 1, 2]
 
@@ -28,7 +28,7 @@ print("Before:", numbers)
 bubble_sort(numbers)
 print("After:", numbers)
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 data = [int(x) for x in input("Enter numbers: ").split()]
 
 print("Sorted:", bubble_sort(data))
