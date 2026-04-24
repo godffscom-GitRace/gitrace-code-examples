@@ -3,7 +3,7 @@
 
 # String Practice
 
-text = "  Hello Python  "
+text = "Hello Python"
 
 print(text.upper())
 print(text.strip())
