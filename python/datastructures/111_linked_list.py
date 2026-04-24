@@ -35,7 +35,7 @@ class LinkedList:
         return result + "None"
 
 
-print("🔗 Linked List Game\n")
+print("Linked List Game \n")
 
 ll = LinkedList()
 
@@ -45,7 +45,7 @@ ll.append("C")
 
 print("List:", ll.show())
 
-print("\n🎯 Add your node!")
+print("\n Add your node!")
 ll.append(input("Enter value: "))
 
 print("Updated:", ll.show())
