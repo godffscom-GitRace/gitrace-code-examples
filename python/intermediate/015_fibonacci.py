@@ -3,7 +3,7 @@
 
 # Recursion Practice (Fibonacci)
 
-print("🔁 Recursion Game\n")
+print("Recursion Game\n")
 
 # 1. Factorial (basic recursion)
 def factorial(n):
@@ -53,6 +53,6 @@ def fib_memo(n):
 
 print("\nF(10) memo:", fib_memo(10))
 
-print("\n🎯 Try it!")
+print("\n Try it!")
 n = int(input("Enter n: "))
 print("Result:", fib_loop(n))
