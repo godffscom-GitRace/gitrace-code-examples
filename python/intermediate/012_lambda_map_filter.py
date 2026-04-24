@@ -3,7 +3,7 @@
 
 # Lambda + Map + Filter Practice
 
-print("⚡ Lambda Game\n")
+print("Lambda Game\n")
 
 # 1. Basic lambda
 square = lambda x: x * x
@@ -30,7 +30,7 @@ students = [("A", 85), ("B", 92), ("C", 78)]
 sorted_students = sorted(students, key=lambda s: s[1], reverse=True)
 print("Sorted:", sorted_students)
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 nums = [1, 2, 3, 4]
 result = list(map(lambda x: x + 1, nums))
 print("Result:", result)
