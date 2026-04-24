@@ -1,8 +1,6 @@
 # [107] 다익스트라 알고리즘 - Dijkstra's Algorithm
 # 레벨: 5 | 가중치 그래프에서 최단 경로를 찾는 다익스트라 알고리즘을 구현합니다
 
-# Dijkstra Practice
-
 import heapq
 
 graph = {
