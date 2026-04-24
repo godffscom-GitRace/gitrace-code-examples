@@ -25,7 +25,7 @@ class Stack:
         return self.items[-1]
 
 
-print("📦 Stack Game\n")
+print("Stack Game\n")
 
 stack = Stack()
 
@@ -33,13 +33,13 @@ stack.push("A")
 stack.push("B")
 stack.push("C")
 
-print("\nTop:", stack.peek())
+print("\n Top:", stack.peek())
 
 stack.pop()
 stack.pop()
 
-print("\nTop after pop:", stack.peek())
+print("\n Top after pop:", stack.peek())
 
-print("\n🎯 Try it yourself!")
+print("\n Try it yourself!")
 stack.push(input("Enter a value: "))
 print("Top now:", stack.peek())
