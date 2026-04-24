@@ -40,7 +40,7 @@ class GraphMatrix:
             print(self.nodes[i], row)
 
 
-print("🌐 Graph Game\n")
+print("Graph Game \n")
 
 print("=== Adjacency List ===")
 g1 = GraphList()
@@ -49,17 +49,17 @@ g1.add_edge("A", "C")
 g1.add_edge("B", "D")
 g1.show()
 
-print("\n=== Adjacency Matrix ===")
+print("\n === Adjacency Matrix ===")
 g2 = GraphMatrix(["A", "B", "C", "D"])
 g2.add_edge("A", "B")
 g2.add_edge("A", "C")
 g2.add_edge("B", "D")
 g2.show()
 
-print("\n🎯 Add your edge!")
+print("\n Add your edge!")
 u = input("From: ")
 v = input("To: ")
 
 g1.add_edge(u, v)
-print("\nUpdated List:")
+print("\n Updated List:")
 g1.show()
