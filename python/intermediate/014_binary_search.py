@@ -20,7 +20,7 @@ def binary_search(arr, target):
     return -1
 
 
-print("🔍 Binary Search Game\n")
+print("Binary Search Game\n")
 
 numbers = [2, 5, 8, 12, 16, 23, 38]
 
@@ -29,7 +29,7 @@ print("Array:", numbers)
 print("Find 23 ->", binary_search(numbers, 23))
 print("Find 50 ->", binary_search(numbers, 50))
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 target = int(input("Enter number: "))
 
 result = binary_search(numbers, target)
