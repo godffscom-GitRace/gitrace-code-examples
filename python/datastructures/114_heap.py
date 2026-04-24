@@ -24,7 +24,7 @@ class MinHeap:
         return self.heap[0]
 
 
-print("📊 Heap Game \n")
+print("Heap Game \n")
 
 h = MinHeap()
 
