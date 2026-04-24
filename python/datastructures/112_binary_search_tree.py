@@ -44,7 +44,7 @@ class BST:
         return False
 
 
-print("🌳 BST Game\n")
+print("BST Game\n")
 
 tree = BST()
 
@@ -54,6 +54,6 @@ for v in [5, 3, 7, 2, 4]:
 print("Search 4:", tree.search(4))
 print("Search 6:", tree.search(6))
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 num = int(input("Enter number: "))
 print("Found:", tree.search(num))
