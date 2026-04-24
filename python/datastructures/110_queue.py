@@ -25,7 +25,7 @@ class Queue:
         return self.items[0]
 
 
-print("🖨 Queue Game\n")
+print("Queue Game\n")
 
 q = Queue()
 
@@ -33,13 +33,13 @@ q.enqueue("Job1")
 q.enqueue("Job2")
 q.enqueue("Job3")
 
-print("\nNext:", q.front())
+print("\n Next:", q.front())
 
 q.dequeue()
 q.dequeue()
 
-print("\nNext after remove:", q.front())
+print("\n Next after remove:", q.front())
 
-print("\n🎯 Your turn!")
+print("\n Your turn!")
 q.enqueue(input("Enter a job: "))
 print("Next now:", q.front())
