@@ -16,7 +16,7 @@ def to_int(value):
         return "Not a number"
 
 
-print("🧮 Safe Calculator\n")
+print("Safe Calculator\n")
 
 a = input("Enter A: ")
 b = input("Enter B: ")
@@ -30,7 +30,7 @@ if isinstance(a, int) and isinstance(b, int):
 else:
     print("Invalid input!")
 
-print("\n🎯 Test cases")
+print("\n Test cases")
 
 print(divide(10, 2))
 print(divide(10, 0))
