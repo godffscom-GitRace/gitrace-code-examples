@@ -1,61 +1,46 @@
-// [31] Promise 기초 - Promise Basics
-// 레벨: 3 | JavaScript의 비동기 처리를 위한 Promise를 학습합니다
+// Promise Basics
 
-// Promise 생성
 function delay(ms) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(`${ms}ms 완료!`), ms);
+  return new Promise(resolve => {
+    setTimeout(() => resolve("done in " + ms + "ms"), ms);
   });
 }
 
-// then(), catch()
-delay(1000).then((msg) => console.log(msg)); // 1000ms 완료!
+delay(200).then(msg => console.log(msg));
 
-// 성공/실패 처리
 function divide(a, b) {
   return new Promise((resolve, reject) => {
-    if (b === 0) {
-      reject("0으로 나눌 수 없습니다");
-    } else {
-      resolve(a / b);
-    }
+    if (b === 0) reject("division by zero");
+    else resolve(a / b);
   });
 }
 
 divide(10, 3)
-  .then((result) => console.log(`결과: ${result.toFixed(2)}`))
-  .catch((err) => console.log(`오류: ${err}`));
+  .then(r => console.log("result: " + r.toFixed(2)))
+  .catch(e => console.log("error: " + e));
 
 divide(10, 0)
-  .then((result) => console.log(`결과: ${result}`))
-  .catch((err) => console.log(`오류: ${err}`)); // 오류: 0으로 나눌 수 없습니다
+  .then(r => console.log(r))
+  .catch(e => console.log("error: " + e));
 
-// Promise 체이닝
-function addOne(num) {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(num + 1), 100);
+function addOne(n) {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(n + 1), 100);
   });
 }
 
 addOne(1)
-  .then((result) => {
-    console.log(`1단계: ${result}`); // 2
-    return addOne(result);
-  })
-  .then((result) => {
-    console.log(`2단계: ${result}`); // 3
-    return addOne(result);
-  })
-  .then((result) => {
-    console.log(`3단계: ${result}`); // 4
-  });
+  .then(r => { console.log("step1: " + r); return addOne(r); })
+  .then(r => { console.log("step2: " + r); return addOne(r); })
+  .then(r => console.log("step3: " + r));
 
-// Promise.all - 모든 Promise가 완료될 때
-Promise.all([delay(100), delay(200), delay(300)]).then((results) => {
-  console.log("모두 완료:", results);
+Promise.all([delay(100), delay(150)]).then(results => {
+  console.log("all done:");
+  for (let i = 0; i < results.length; i++) {
+    console.log(results[i]);
+  }
 });
 
-// Promise.race - 가장 빠른 것만
-Promise.race([delay(100), delay(200), delay(300)]).then((result) => {
-  console.log("가장 빠른:", result); // 100ms 완료!
+Promise.race([delay(100), delay(300)]).then(result => {
+  console.log("fastest: " + result);
 });
