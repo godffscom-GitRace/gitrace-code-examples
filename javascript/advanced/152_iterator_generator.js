@@ -1,73 +1,93 @@
-// Iterator & Generator
+// Iterator basics
 
-// custom iterator protocol
-function createCounter(start, end) {
+function createRange(start, end) {
   return {
     [Symbol.iterator]() {
-      let cur = start;
-      return { next() { return cur <= end ? { value: cur++, done: false } : { done: true }; } };
+      let current = start;
+      return {
+        next() {
+          if (current <= end) {
+            return { value: current++, done: false };
+          }
+          return { done: true };
+        }
+      };
     }
   };
 }
 
-console.log([...createCounter(1, 5)]); // [1,2,3,4,5]
+console.log([...createRange(1, 5)]);
 
-// generator basics
-function* numGen() {
+// generator basic
+function* simpleGen() {
   yield 1;
   yield 2;
   yield 3;
 }
 
-const gen = numGen();
-console.log(gen.next()); // {value:1, done:false}
-console.log(gen.next()); // {value:2, done:false}
-console.log(gen.next()); // {value:3, done:false}
-console.log(gen.next()); // {value:undefined, done:true}
-console.log([...numGen()]); // [1,2,3]
+const g = simpleGen();
 
-// infinite sequence with take helper
-function* infiniteCounter(start = 0) {
+console.log(g.next());
+console.log(g.next());
+console.log(g.next());
+console.log(g.next());
+
+console.log([...simpleGen()]);
+
+// infinite generator
+function* infinite(start = 0) {
   let n = start;
-  while (true) yield n++;
+  while (true) {
+    yield n++;
+  }
 }
 
 function take(gen, count) {
   const result = [];
-  for (const val of gen) {
-    result.push(val);
-    if (result.length >= count) break;
+  for (const v of gen) {
+    result.push(v);
+    if (result.length === count) break;
   }
   return result;
 }
 
-console.log(take(infiniteCounter(), 5));    // [0,1,2,3,4]
+console.log(take(infinite(), 5));
 
 // fibonacci generator
-function* fibonacci() {
-  let a = 0, b = 1;
-  while (true) { yield a; [a, b] = [b, a + b]; }
-}
-console.log(take(fibonacci(), 8)); // [0,1,1,2,3,5,8,13]
+function* fib() {
+  let a = 0;
+  let b = 1;
 
-// two-way communication via yield
-function* conversation() {
-  const name = yield "What is your name?";
-  const age  = yield `${name}, how old are you?`;
-  yield `${name} is ${age} years old!`;
+  while (true) {
+    yield a;
+    [a, b] = [b, a + b];
+  }
 }
 
-const chat = conversation();
-console.log(chat.next().value);
-console.log(chat.next("Alice").value);
-console.log(chat.next(25).value);
+console.log(take(fib(), 8));
 
-// unique ID generator
-function* idGenerator(prefix = "ID") {
+// generator communication
+function* chat() {
+  const name = yield "name?";
+  const age = yield name + " age?";
+  yield name + " is " + age;
+}
+
+const c = chat();
+
+console.log(c.next().value);
+console.log(c.next("Tom").value);
+console.log(c.next(30).value);
+
+// id generator
+function* idGen() {
   let id = 1;
-  while (true) yield `${prefix}-${String(id++).padStart(4, "0")}`;
+  while (true) {
+    yield "ID-" + id++;
+  }
 }
 
-const userIds = idGenerator("USER");
-console.log(userIds.next().value); // USER-0001
-console.log(userIds.next().value); // USER-0002
+const ids = idGen();
+
+console.log(ids.next().value);
+console.log(ids.next().value);
