@@ -1,8 +1,8 @@
 // Two Pointers
 
-// two sum in sorted array
 function twoSum(arr, target) {
-  let left = 0, right = arr.length - 1;
+  let left = 0;
+  let right = arr.length - 1;
   while (left < right) {
     const sum = arr[left] + arr[right];
     if (sum === target) return [left, right];
@@ -13,46 +13,66 @@ function twoSum(arr, target) {
 }
 
 const sorted = [1, 3, 5, 7, 11, 15, 20];
-for (const t of [12, 26, 100]) {
+
+const targets = [12, 26, 100];
+for (let i = 0; i < targets.length; i++) {
+  const t = targets[i];
   const r = twoSum(sorted, t);
-  if (r) console.log(`  sum=${t} => [${sorted[r[0]]}+${sorted[r[1]]}]`);
-  else   console.log(`  sum=${t} => not found`);
+  if (r) {
+    console.log("sum " + t + " => " + sorted[r[0]] + " + " + sorted[r[1]]);
+  } else {
+    console.log("sum " + t + " => not found");
+  }
 }
 
-// palindrome check
 function isPalindrome(s) {
   const clean = s.toLowerCase().replace(/[^a-z0-9]/g, "");
-  let left = 0, right = clean.length - 1;
+  let left = 0;
+  let right = clean.length - 1;
   while (left < right) {
     if (clean[left] !== clean[right]) return false;
-    left++; right--;
+    left++;
+    right--;
   }
   return true;
 }
 
-console.log("\npalindrome:");
-for (const w of ["racecar", "hello", "A man a plan a canal Panama"]) {
-  console.log(`  [${isPalindrome(w) ? "O" : "X"}] "${w}"`);
+console.log("palindrome:");
+const words = ["racecar", "hello", "A man a plan a canal Panama"];
+for (let i = 0; i < words.length; i++) {
+  const ok = isPalindrome(words[i]) ? "O" : "X";
+  console.log(ok + " " + words[i]);
 }
 
-// remove duplicates in-place from sorted array
 function removeDuplicates(arr) {
   let slow = 0;
   for (let fast = 1; fast < arr.length; fast++) {
-    if (arr[fast] !== arr[slow]) arr[++slow] = arr[fast];
+    if (arr[fast] !== arr[slow]) {
+      slow++;
+      arr[slow] = arr[fast];
+    }
   }
   return slow + 1;
 }
 
 const nums = [1, 1, 2, 2, 3, 4, 4, 5];
 const len = removeDuplicates(nums);
-console.log(`\nremove dupes: [${nums.slice(0, len)}]`);
 
-// container with most water
+let out = "";
+for (let i = 0; i < len; i++) {
+  out += nums[i] + " ";
+}
+console.log("remove dupes:");
+console.log(out.trim());
+
 function maxWater(heights) {
-  let left = 0, right = heights.length - 1, max = 0;
+  let left = 0;
+  let right = heights.length - 1;
+  let max = 0;
   while (left < right) {
-    max = Math.max(max, Math.min(heights[left], heights[right]) * (right - left));
+    const h = Math.min(heights[left], heights[right]);
+    const area = h * (right - left);
+    if (area > max) max = area;
     if (heights[left] < heights[right]) left++;
     else right--;
   }
@@ -60,4 +80,4 @@ function maxWater(heights) {
 }
 
 const h = [1, 8, 6, 2, 5, 4, 8, 3, 7];
-console.log(`\nmax water: ${maxWater(h)}`);
+console.log("max water: " + maxWater(h));
