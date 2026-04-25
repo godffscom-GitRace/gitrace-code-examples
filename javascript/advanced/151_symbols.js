@@ -1,57 +1,72 @@
-// Symbols
+// Symbols basic
 
-// every Symbol is unique
-const sym1 = Symbol();
-const sym2 = Symbol();
-const sym3 = Symbol("label");
-console.log(sym3.toString());         // Symbol(label)
-console.log(sym3.description);        // "label"
-console.log(sym1 === sym2);           // false
+const id = Symbol("id");
+const name = Symbol("name");
 
-// Symbol as object property key
-const ID   = Symbol("id");
-const NAME = Symbol("name");
 const user = {
-  [ID]: 1,
-  [NAME]: "Alice",
-  name: "display name"    // no collision with NAME symbol
+  [id]: 1,
+  [name]: "Alice",
+  displayName: "Alice A"
 };
-console.log(user[ID], user[NAME], user.name);
 
-// Symbols are not visible in normal enumeration
-console.log(Object.keys(user));   // ["name"]
-console.log(JSON.stringify(user)); // {"name":"display name"}
-console.log(Object.getOwnPropertySymbols(user).map(s => s.toString()));
+console.log(user[id]);
+console.log(user[name]);
+console.log(user.displayName);
 
-// Symbol.for() — global registry
-const g1 = Symbol.for("app.id");
-const g2 = Symbol.for("app.id");
-console.log(g1 === g2);         // true
-console.log(Symbol.keyFor(g1)); // "app.id"
+// Symbol uniqueness
+const a = Symbol("test");
+const b = Symbol("test");
 
-// well-known Symbol: Symbol.iterator
-class Range {
-  constructor(start, end) { this.start = start; this.end = end; }
+console.log(a === b);
+
+// hidden properties
+console.log(Object.keys(user));
+console.log(Object.getOwnPropertySymbols(user));
+
+// Symbol.for
+const g1 = Symbol.for("app.key");
+const g2 = Symbol.for("app.key");
+
+console.log(g1 === g2);
+console.log(Symbol.keyFor(g1));
+
+// iterator symbol
+class Counter {
+  constructor(max) {
+    this.max = max;
+  }
+
   [Symbol.iterator]() {
-    let cur = this.start, end = this.end;
-    return { next() { return cur <= end ? { value: cur++, done: false } : { done: true }; } };
+    let i = 1;
+    const max = this.max;
+    return {
+      next() {
+        return i <= max
+          ? { value: i++, done: false }
+          : { done: true };
+      }
+    };
   }
 }
 
-const range = new Range(1, 5);
-console.log([...range]); // [1,2,3,4,5]
+const counter = new Counter(5);
+console.log([...counter]);
 
-// Symbol.toPrimitive — control type coercion
-class Money {
-  constructor(amount, currency) { this.amount = amount; this.currency = currency; }
+// toPrimitive symbol
+class Box {
+  constructor(value) {
+    this.value = value;
+  }
+
   [Symbol.toPrimitive](hint) {
-    if (hint === "number") return this.amount;
-    if (hint === "string") return `${this.amount}${this.currency}`;
-    return this.amount;
+    if (hint === "string") return "Box:" + this.value;
+    if (hint === "number") return this.value;
+    return this.value;
   }
 }
 
-const price = new Money(500, "USD");
-console.log(`price: ${price}`);    // 500USD
-console.log(price + 100);          // 600
-console.log(price > 400);          // true
+const box = new Box(10);
+
+console.log(String(box));
+console.log(box + 5);
+console.log(box > 3);
