@@ -2,54 +2,56 @@
 
 class Animal {
   constructor(name, sound) {
-    this.name  = name;
+    this.name = name;
     this.sound = sound;
   }
 
-  speak() { return `${this.name}: ${this.sound}!`; }
-  info()  { return `[${this.constructor.name}] ${this.name}`; }
+  speak() {
+    return this.name + ": " + this.sound;
+  }
 }
 
-const cat = new Animal("Whiskers", "meow");
+const cat = new Animal("Cat", "meow");
 console.log(cat.speak());
 
-// extends and super — inheritance
 class Dog extends Animal {
-  constructor(name, breed) {
+  constructor(name) {
     super(name, "woof");
-    this.breed = breed;
   }
 
-  info() { return `${super.info()} (${this.breed})`; }
-  fetch(item) { return `${this.name} fetches the ${item}!`; }
+  run() {
+    return this.name + " runs";
+  }
 }
 
-const dog = new Dog("Rex", "Husky");
-console.log(dog.speak());    // inherited
-console.log(dog.info());
-console.log(dog.fetch("ball"));
+const dog = new Dog("Rex");
+console.log(dog.speak());
+console.log(dog.run());
 
-// static methods — called on the class, not instances
 class MathHelper {
-  static add(a, b)          { return a + b; }
-  static multiply(a, b)     { return a * b; }
-  static average(...nums)   { return nums.reduce((a, b) => a + b, 0) / nums.length; }
+  static add(a, b) {
+    return a + b;
+  }
 }
 
-console.log(MathHelper.add(5, 3));
-console.log(MathHelper.average(80, 90, 85));
+console.log(MathHelper.add(2, 3));
 
-// getter / setter with private field
-class Temperature {
-  #celsius;
-  constructor(c) { this.#celsius = c; }
+class Temp {
+  constructor(c) {
+    this.c = c;
+  }
 
-  get fahrenheit()    { return this.#celsius * 1.8 + 32; }
-  set fahrenheit(f)   { this.#celsius = (f - 32) / 1.8; }
-  toString()          { return `${this.#celsius}C (${this.fahrenheit}F)`; }
+  get f() {
+    return this.c * 1.8 + 32;
+  }
+
+  set f(value) {
+    this.c = (value - 32) / 1.8;
+  }
 }
 
-const temp = new Temperature(100);
-console.log(temp.toString());
-temp.fahrenheit = 68;
-console.log(temp.toString());
+const t = new Temp(0);
+console.log(t.f);
+
+t.f = 68;
+console.log(t.c);
