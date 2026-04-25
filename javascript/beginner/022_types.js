@@ -1,36 +1,33 @@
-// Types & Type Conversion
+// Types and Conversion
 
-// primitive types
 const num = 42;
 const str = "Hello";
 const bool = true;
 
-// typeof operator
-console.log(typeof num);   // "number"
-console.log(typeof str);   // "string"
-console.log(typeof bool);  // "boolean"
+console.log(typeof num);
+console.log(typeof str);
+console.log(typeof bool);
 
-// null vs undefined
 let empty = null;
 let notDefined;
-console.log(typeof empty);      // "object" (JS quirk)
-console.log(typeof notDefined); // "undefined"
-console.log(empty == notDefined);  // true
-console.log(empty === notDefined); // false
 
-// Number()
-console.log(Number("123"));  // 123
-console.log(Number("abc"));  // NaN
-console.log(Number(true));   // 1
-console.log(Number(false));  // 0
+console.log(typeof empty);
+console.log(typeof notDefined);
 
-// String()
-console.log(String(123));   // "123"
-console.log(String(null));  // "null"
+console.log(empty == notDefined);
+console.log(empty === notDefined);
 
-// implicit coercion
-console.log("5" + 3);   // "53"
-console.log("5" - 3);   // 2
-console.log(Boolean(0));  // false
-console.log(Boolean(""));  // false
-console.log(Boolean("hi")); // true
+console.log(Number("123"));
+console.log(Number("abc"));
+console.log(Number(true));
+console.log(Number(false));
+
+console.log(String(123));
+console.log(String(null));
+
+console.log("5" + 3);
+console.log("5" - 3);
+
+console.log(Boolean(0));
+console.log(Boolean(""));
+console.log(Boolean("hi"));
