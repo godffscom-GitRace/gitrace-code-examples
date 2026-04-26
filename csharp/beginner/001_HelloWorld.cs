@@ -3,43 +3,34 @@
 
 using System;
 
-namespace HelloWorld
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        // static void Main() - 프로그램 시작점
-        static void Main(string[] args)
-        {
-            // Console.WriteLine() - 출력
-            Console.WriteLine("Hello, C# World!");
+        Console.WriteLine("Hello CSharp");
 
-            // 메서드 호출
-            string msg = Greet("김철수");
-            Console.WriteLine(msg);
+        string msg = Greet("Alex");
+        Console.WriteLine(msg);
 
-            SayHello("이영희");
-            SayHello("박민수");
+        Say("Sam");
+        Say("Lee");
 
-            int result = Add(3, 5);
-            Console.WriteLine($"3 + 5 = {result}");
-        }
+        int result = Add(3, 5);
+        Console.WriteLine("3 + 5 = " + result);
+    }
 
-        // 반환값 있는 메서드
-        static string Greet(string name)
-        {
-            return $"안녕하세요, {name}님!";
-        }
+    static string Greet(string name)
+    {
+        return "Hello " + name;
+    }
 
-        // 반환값 없는 메서드 (void)
-        static void SayHello(string name)
-        {
-            Console.WriteLine($"Hello, {name}!");
-        }
+    static void Say(string name)
+    {
+        Console.WriteLine("Hi " + name);
+    }
 
-        // 매개변수와 반환값
-        static int Add(int a, int b)
-        {
-            return a + b;
-        }
+    static int Add(int a, int b)
+    {
+        return a + b;
     }
 }
