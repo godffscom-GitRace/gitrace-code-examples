@@ -2,66 +2,39 @@
 <!-- 레벨: 3 | aria 속성과 시맨틱 태그로 접근성 높은 웹을 만듭니다 -->
 
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>웹 접근성</title>
+  <title>ARIA</title>
 </head>
 <body>
 
-  <!-- 스킵 내비게이션: 키보드 사용자를 위한 메인 콘텐츠 바로가기 -->
-  <a href="#main-content" class="skip-link">본문 바로가기</a>
+  <a href="#main" aria-label="skip">Skip</a>
 
-  <!-- role: 요소의 역할 명시 -->
-  <nav role="navigation" aria-label="주 메뉴">
-    <ul>
-      <li><a href="/">홈</a></li>
-      <li><a href="/examples">예제</a></li>
-      <li><a href="/ranking">랭킹</a></li>
-    </ul>
+  <nav role="navigation" aria-label="menu">
+    <a href="/">Home</a>
+    <a href="/docs">Docs</a>
   </nav>
 
-  <main id="main-content" role="main">
-    <h1>접근성 예시</h1>
+  <main id="main" role="main">
+    <h1>ARIA</h1>
 
-    <!-- aria-label: 스크린리더에 읽힐 텍스트 -->
-    <button aria-label="검색창 열기">
-      🔍
-    </button>
+    <button aria-label="open">Btn</button>
 
-    <!-- aria-hidden: 스크린리더에서 숨기기 -->
-    <span aria-hidden="true">🎉</span>
-    <span>축하합니다!</span>
+    <span aria-hidden="true">*</span>
+    <span>text</span>
 
-    <!-- aria-expanded: 열림/닫힘 상태 -->
-    <button aria-expanded="false" aria-controls="dropdown">
-      메뉴 열기
-    </button>
-    <ul id="dropdown" hidden>
-      <li>항목 1</li>
-      <li>항목 2</li>
+    <button aria-expanded="false">Menu</button>
+    <ul hidden>
+      <li>One</li>
+      <li>Two</li>
     </ul>
 
-    <!-- aria-live: 동적으로 변하는 콘텐츠 알림 -->
-    <div aria-live="polite" aria-atomic="true">
-      <!-- JS로 업데이트 시 스크린리더가 자동으로 읽어줌 -->
-      <p id="status">준비 중...</p>
-    </div>
+    <img src="img.png" alt="chart">
 
-    <!-- 이미지 접근성 -->
-    <img src="chart.png" alt="2024년 월별 방문자 수 막대 그래프. 12월이 가장 높음.">
-
-    <!-- 폼 접근성 -->
     <form>
-      <label for="email">이메일 주소 (필수)</label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        required
-        aria-required="true"
-        aria-describedby="email-hint">
-      <p id="email-hint">example@domain.com 형식으로 입력하세요.</p>
+      <label for="mail">Mail</label>
+      <input type="email" id="mail" aria-required="true">
     </form>
 
   </main>
