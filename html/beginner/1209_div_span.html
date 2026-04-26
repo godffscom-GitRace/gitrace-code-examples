@@ -2,33 +2,30 @@
 <!-- 레벨: 2 | 블록 요소(div)와 인라인 요소(span)의 차이를 배웁니다 -->
 
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>div와 span</title>
+  <title>div span</title>
 </head>
 <body>
   <h1>div vs span</h1>
 
-  <!-- div: 블록 레벨 요소 - 한 줄 전체를 차지 -->
-  <div style="background-color: lightblue; padding: 10px;">
-    div는 블록 요소입니다. 새 줄에서 시작합니다.
+  <div style="background: lightblue; padding: 8px;">
+    block element
   </div>
-  <div style="background-color: lightgreen; padding: 10px;">
-    다음 div는 아래 줄에 배치됩니다.
+  <div style="background: lightgreen; padding: 8px;">
+    next line
   </div>
 
-  <!-- span: 인라인 요소 - 내용만큼만 차지 -->
   <p>
-    이 문장에서 <span style="color: red;">빨간색 단어</span>와
-    <span style="font-weight: bold;">굵은 단어</span>만 다르게 스타일을 줍니다.
+    text with <span style="color: red;">red</span>
+    and <span style="font-weight: bold;">bold</span>
   </p>
 
-  <!-- div로 레이아웃 구성 -->
-  <h2>레이아웃 예시</h2>
-  <div style="display: flex; gap: 10px;">
-    <div style="background: #ffd6cc; padding: 10px; flex: 1;">왼쪽</div>
-    <div style="background: #d6e8ff; padding: 10px; flex: 1;">오른쪽</div>
+  <h2>layout</h2>
+  <div style="display: flex; gap: 8px;">
+    <div style="background: #eee; padding: 8px; flex: 1;">left</div>
+    <div style="background: #ccc; padding: 8px; flex: 1;">right</div>
   </div>
 </body>
 </html>
