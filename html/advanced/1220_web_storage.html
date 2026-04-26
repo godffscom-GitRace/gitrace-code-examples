@@ -2,76 +2,36 @@
 <!-- 레벨: 4 | localStorage와 sessionStorage로 브라우저에 데이터를 저장합니다 -->
 
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Web Storage</title>
+  <title>Storage</title>
 </head>
 <body>
-  <h1>Web Storage API</h1>
+  <h1>Storage</h1>
 
-  <div>
-    <h2>localStorage (영구 저장)</h2>
-    <input type="text" id="nameInput" placeholder="이름 입력">
-    <button onclick="saveName()">저장</button>
-    <button onclick="loadName()">불러오기</button>
-    <button onclick="deleteName()">삭제</button>
-    <p id="nameResult"></p>
-  </div>
+  <input id="inp" type="text" placeholder="name">
+  <button onclick="save()">Save</button>
+  <button onclick="load()">Load</button>
+  <button onclick="del()">Del</button>
 
-  <div>
-    <h2>방문 횟수 카운터</h2>
-    <p id="visitCount"></p>
-    <button onclick="resetCount()">카운터 초기화</button>
-  </div>
-
-  <div>
-    <h2>sessionStorage (탭 닫으면 삭제)</h2>
-    <input type="text" id="sessionInput" placeholder="임시 메모">
-    <button onclick="saveSession()">임시 저장</button>
-    <p id="sessionResult"></p>
-  </div>
+  <p id="out"></p>
 
   <script>
-    // localStorage: 창을 닫아도 유지 (도메인 공유)
-    function saveName() {
-      const name = document.getElementById('nameInput').value;
-      localStorage.setItem('userName', name);
-      document.getElementById('nameResult').textContent = `저장됨: ${name}`;
+    function save() {
+      const v = document.getElementById("inp").value;
+      localStorage.setItem("name", v);
+      document.getElementById("out").textContent = "saved " + v;
     }
 
-    function loadName() {
-      const name = localStorage.getItem('userName');
-      const msg = name ? `저장된 이름: ${name}` : '저장된 이름 없음';
-      document.getElementById('nameResult').textContent = msg;
+    function load() {
+      const v = localStorage.getItem("name");
+      document.getElementById("out").textContent = v ? v : "none";
     }
 
-    function deleteName() {
-      localStorage.removeItem('userName');
-      document.getElementById('nameResult').textContent = '삭제되었습니다.';
-    }
-
-    // 방문 횟수 누적
-    let count = parseInt(localStorage.getItem('visitCount') || '0') + 1;
-    localStorage.setItem('visitCount', count);
-    document.getElementById('visitCount').textContent = `총 방문 횟수: ${count}회`;
-
-    function resetCount() {
-      localStorage.removeItem('visitCount');
-      document.getElementById('visitCount').textContent = '초기화되었습니다. 새로고침 해보세요.';
-    }
-
-    // sessionStorage: 탭/창을 닫으면 삭제
-    function saveSession() {
-      const memo = document.getElementById('sessionInput').value;
-      sessionStorage.setItem('tempMemo', memo);
-      document.getElementById('sessionResult').textContent = `임시 저장됨: ${memo}`;
-    }
-
-    // 페이지 로드 시 sessionStorage 확인
-    const savedMemo = sessionStorage.getItem('tempMemo');
-    if (savedMemo) {
-      document.getElementById('sessionResult').textContent = `이전 메모: ${savedMemo}`;
+    function del() {
+      localStorage.removeItem("name");
+      document.getElementById("out").textContent = "deleted";
     }
   </script>
 </body>
