@@ -6,55 +6,32 @@
 using namespace std;
 
 int main() {
-    // 기본 for문
-    cout << "1부터 10까지: ";
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 5; i++)
         cout << i << " ";
+    cout << endl;
+
+    int v = 1;
+    while (v <= 8) {
+        cout << v << " ";
+        v *= 2;
     }
     cout << endl;
 
-    // while문
-    cout << "\n=== while: 2의 거듭제곱 ===" << endl;
-    int val = 1;
-    while (val <= 1024) {
-        cout << val << " ";
-        val *= 2;
-    }
-    cout << endl;
-
-    // do-while
-    cout << "\n=== do-while ===" << endl;
-    int input;
+    int x;
     do {
-        cout << "1~10 사이 숫자 입력: ";
-        cin >> input;
-    } while (input < 1 || input > 10);
-    cout << "입력값: " << input << endl;
+        cin >> x;
+    } while (x < 1 || x > 5);
+    cout << x << endl;
 
-    // 범위 기반 for문 (C++11) - 배열/컨테이너 순회
-    cout << "\n=== 범위 기반 for문 ===" << endl;
-    vector<string> langs = {"C++", "Python", "Java", "JavaScript"};
+    vector<int> nums = {1, 2, 3};
+    for (int n : nums)
+        cout << n << " ";
+    cout << endl;
 
-    for (const string& lang : langs) {
-        cout << "  - " << lang << endl;
-    }
-
-    // auto 사용
-    int arr[] = {10, 20, 30, 40, 50};
-    int sum = 0;
-    for (auto n : arr) {
-        sum += n;
-    }
-    cout << "배열 합계: " << sum << endl;
-
-    // 중첩 for + break/continue
-    cout << "\n=== 소수 찾기 (2~20) ===" << endl;
-    for (int n = 2; n <= 20; n++) {
-        bool isPrime = true;
-        for (int i = 2; i * i <= n; i++) {
-            if (n % i == 0) { isPrime = false; break; }
-        }
-        if (isPrime) cout << n << " ";
+    for (int i = 1; i <= 5; i++) {
+        if (i == 3) continue;
+        if (i == 5) break;
+        cout << i << " ";
     }
     cout << endl;
 
