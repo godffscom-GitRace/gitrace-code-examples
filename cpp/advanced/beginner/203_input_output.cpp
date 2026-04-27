@@ -3,44 +3,28 @@
 
 #include <iostream>
 #include <string>
-#include <iomanip>  // setw, setprecision
+#include <iomanip>
 using namespace std;
 
 int main() {
     string name;
-    int age;
     double height;
 
-    cout << "=== 개인정보 입력 ===" << endl;
-
-    // cin: 표준 입력 스트림 (공백 전까지 읽음)
-    cout << "이름을 입력하세요: ";
+    cout << "Name ";
     cin >> name;
 
-    cout << "나이를 입력하세요: ";
-    cin >> age;
-
-    cout << "키를 입력하세요 (cm): ";
+    cout << "Height ";
     cin >> height;
 
-    // 출력
-    cout << "\n=== 입력 결과 ===" << endl;
-    cout << "이름: " << name << endl;
-    cout << "나이: " << age << "세" << endl;
-    cout << "키: " << fixed << setprecision(1) << height << " cm" << endl;
+    cout << fixed << setprecision(1);
+    cout << name << " " << height << endl;
 
-    // getline: 공백 포함한 한 줄 전체 읽기
-    cin.ignore();  // 버퍼의 남은 '\n' 제거
-    string address;
-    cout << "\n주소를 입력하세요: ";
-    getline(cin, address);
-    cout << "주소: " << address << endl;
+    cin.ignore();
+    string city;
+    getline(cin, city);
+    cout << city << endl;
 
-    // iomanip으로 출력 형식 지정
-    cout << "\n=== 출력 형식 ===" << endl;
-    cout << setw(10) << "이름" << setw(10) << "점수" << endl;
-    cout << setw(10) << "김철수" << setw(10) << 95 << endl;
-    cout << setw(10) << "이영희" << setw(10) << 88 << endl;
+    cout << setw(8) << name << setw(8) << 100 << endl;
 
     return 0;
 }
