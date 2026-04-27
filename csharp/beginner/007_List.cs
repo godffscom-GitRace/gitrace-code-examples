@@ -8,8 +8,10 @@ class Program
 {
     static void Main()
     {
-        var list = new List<int> { 2, 1 };
-        list.Add(3);
+        var list = new List<int> { 3, 1, 4 };
+
+        list.Add(2);
+        list.Remove(1);
 
         Console.WriteLine(list.Count);
 
@@ -19,6 +21,12 @@ class Program
         Console.WriteLine();
 
         list.Sort();
+
+        int sum = 0;
+        foreach (var x in list)
+            sum += x;
+
+        Console.WriteLine(sum);
         Console.WriteLine(list[0]);
     }
 }
