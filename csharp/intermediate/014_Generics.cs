@@ -4,122 +4,70 @@
 using System;
 using System.Collections.Generic;
 
-namespace Generics
+class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main(string[] args)
-        {
-            // 제네릭 클래스 사용
-            var strBox = new Box<string>("안녕하세요");
-            var intBox = new Box<int>(42);
-            Console.WriteLine($"문자열 박스: {strBox.Value}");
-            Console.WriteLine($"정수 박스: {intBox.Value}");
+        var box = new Box<int>(5);
+        Console.WriteLine(box.Value);
 
-            // 제네릭 메서드
-            Console.WriteLine($"\n첫 번째: {GetFirst(new[] { "사과", "바나나" })}");
-            Console.WriteLine($"첫 번째: {GetFirst(new[] { 10, 20, 30 })}");
+        Console.WriteLine(First(new int[] { 7, 8 }));
 
-            Swap(out string a, out string b, "A", "B");
-            Console.WriteLine($"Swap: {a}, {b}");  // B, A
+        Swap(out int a, out int b, 1, 2);
+        Console.WriteLine(a + " " + b);
 
-            // 제네릭 스택
-            Console.WriteLine("\n=== 제네릭 스택 ===");
-            var stack = new SimpleStack<string>(5);
-            stack.Push("첫 번째");
-            stack.Push("두 번째");
-            stack.Push("세 번째");
+        var st = new Stack<int>();
+        st.Push(3);
+        st.Push(4);
+        Console.WriteLine(st.Pop());
 
-            Console.WriteLine($"Pop: {stack.Pop()}");  // 세 번째
-            Console.WriteLine($"Peek: {stack.Peek()}"); // 두 번째
-            Console.WriteLine($"크기: {stack.Count}");
-
-            // 제약 조건 (where)
-            Console.WriteLine("\n=== 제약 조건 ===");
-            var repo = new Repository<Product>();
-            repo.Add(new Product { Id = 1, Name = "노트북", Price = 1500000 });
-            repo.Add(new Product { Id = 2, Name = "마우스", Price = 50000 });
-
-            var item = repo.GetById(1);
-            Console.WriteLine($"찾음: {item?.Name} ({item?.Price}원)");
-            repo.PrintAll();
-        }
-
-        // 제네릭 메서드
-        static T GetFirst<T>(T[] array)
-        {
-            return array[0];
-        }
-
-        static void Swap<T>(out T a, out T b, T x, T y)
-        {
-            a = y;
-            b = x;
-        }
+        var repo = new Repo<Item>();
+        repo.Add(new Item { Id = 1 });
+        Console.WriteLine(repo.Get(1).Id);
     }
 
-    // 제네릭 클래스
-    class Box<T>
+    static T First<T>(T[] arr)
     {
-        public T Value { get; set; }
-        public Box(T value) { Value = value; }
+        return arr[0];
     }
 
-    // 제네릭 스택 구현
-    class SimpleStack<T>
+    static void Swap<T>(out T a, out T b, T x, T y)
     {
-        private T[] _items;
-        public int Count { get; private set; }
+        a = y;
+        b = x;
+    }
+}
 
-        public SimpleStack(int capacity)
-        {
-            _items = new T[capacity];
-            Count = 0;
-        }
+class Box<T>
+{
+    public T Value;
+    public Box(T v) { Value = v; }
+}
 
-        public void Push(T item)
-        {
-            _items[Count++] = item;
-        }
+interface IId
+{
+    int Id { get; set; }
+}
 
-        public T Pop()
-        {
-            return _items[--Count];
-        }
+class Item : IId
+{
+    public int Id { get; set; }
+}
 
-        public T Peek()
-        {
-            return _items[Count - 1];
-        }
+class Repo<T> where T : IId, new()
+{
+    List<T> list = new List<T>();
+
+    public void Add(T x)
+    {
+        list.Add(x);
     }
 
-    // 제약 조건 - where T : IEntity
-    interface IEntity
+    public T Get(int id)
     {
-        int Id { get; set; }
-    }
+        foreach (var x in list)
+            if (x.Id == id) return x;
 
-    class Product : IEntity
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public int Price { get; set; }
-    }
-
-    // where T : IEntity - T는 IEntity를 구현해야 함
-    class Repository<T> where T : IEntity
-    {
-        private List<T> _items = new List<T>();
-
-        public void Add(T item) => _items.Add(item);
-
-        public T GetById(int id) => _items.Find(x => x.Id == id);
-
-        public void PrintAll()
-        {
-            Console.WriteLine($"전체 {_items.Count}개:");
-            foreach (var item in _items)
-                Console.WriteLine($"  ID: {item.Id} - {item}");
-        }
+        return new T();
     }
 }
