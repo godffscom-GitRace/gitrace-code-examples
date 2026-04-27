@@ -3,51 +3,40 @@
 
 using System;
 
-namespace Operators
+namespace OperatorsPractice
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // 산술/비교/논리 연산자
-            int a = 17, b = 5;
-            Console.WriteLine("=== 산술 연산자 ===");
-            Console.WriteLine($"{a} + {b} = {a + b}");   // 22
-            Console.WriteLine($"{a} - {b} = {a - b}");   // 12
-            Console.WriteLine($"{a} * {b} = {a * b}");   // 85
-            Console.WriteLine($"{a} / {b} = {a / b}");   // 3
-            Console.WriteLine($"{a} % {b} = {a % b}");   // 2
+            int a = 10;
+            int b = 3;
 
-            Console.WriteLine("\n=== 비교 연산자 ===");
-            Console.WriteLine($"10 == 10: {10 == 10}");   // True
-            Console.WriteLine($"10 != 5: {10 != 5}");     // True
-            Console.WriteLine($"10 > 5: {10 > 5}");       // True
+            Console.WriteLine("Basic");
+            Console.WriteLine(a + b);
+            Console.WriteLine(a - b);
+            Console.WriteLine(a * b);
 
-            Console.WriteLine("\n=== 논리 연산자 ===");
-            bool x = true, y = false;
-            Console.WriteLine($"true && false: {x && y}");  // False
-            Console.WriteLine($"true || false: {x || y}");  // True
-            Console.WriteLine($"!true: {!x}");               // False
+            Console.WriteLine("\nCheck");
+            Console.WriteLine(a > b);
+            Console.WriteLine(a == b);
 
-            // null 병합 연산자 (??)
-            string? nickname = null;
-            string display = nickname ?? "닉네임 없음";
-            Console.WriteLine($"\n?? 연산자: {display}");
+            bool flag = true;
+            Console.WriteLine("\nLogic");
+            Console.WriteLine(!flag);
 
-            // null 조건 연산자 (?.)
-            string? text = null;
-            int? length = text?.Length;  // null이면 null 반환
-            Console.WriteLine($"?. 연산자: {length}");  // (빈 출력)
+            string name = null;
+            Console.WriteLine("\nNull");
+            Console.WriteLine(name ?? "none");
 
-            text = "Hello";
-            length = text?.Length;
-            Console.WriteLine($"?. 연산자: {length}");  // 5
+            string text = "hi";
+            Console.WriteLine(text?.Length);
 
-            // is, as 연산자
-            object obj = "문자열입니다";
-            Console.WriteLine($"\nis string: {obj is string}");  // True
-            string? str = obj as string;  // 캐스팅 (실패 시 null)
-            Console.WriteLine($"as string: {str}");
+            object obj = "ok";
+            Console.WriteLine(obj is string);
+
+            string cast = obj as string;
+            Console.WriteLine(cast);
         }
     }
 }
