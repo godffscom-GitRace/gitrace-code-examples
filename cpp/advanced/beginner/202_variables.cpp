@@ -6,37 +6,26 @@
 using namespace std;
 
 int main() {
-    // 기본 자료형
-    int age = 25;
-    double height = 175.5;
-    char grade = 'A';
+    int age = 20;
+    double height = 170.5;
+    char grade = 'B';
     bool isStudent = true;
 
-    // C++ string (C의 char 배열보다 편리)
-    string name = "김철수";
+    string name = "Alex";
 
-    // auto: 컴파일러가 자료형을 자동 추론
-    auto score = 95;       // int로 추론
-    auto gpa = 4.2;        // double로 추론
-    auto city = "서울"s;  // string으로 추론
+    auto score = 90;
+    auto city = string("Seoul");
 
-    // 출력
-    cout << "이름: " << name << endl;
-    cout << "나이: " << age << endl;
-    cout << "키: " << height << " cm" << endl;
-    cout << "학점: " << grade << endl;
-    cout << "학생 여부: " << boolalpha << isStudent << endl;
-    cout << "점수: " << score << endl;
+    cout << "Name " << name << endl;
+    cout << "Age " << age << endl;
+    cout << "Grade " << grade << endl;
+    cout << "Student " << boolalpha << isStudent << endl;
 
-    // 상수 (const)
-    const double PI = 3.14159265358979;
-    cout << "π = " << PI << endl;
+    cout << "Score " << score << endl;
+    cout << "City " << city << endl;
 
-    // 자료형 크기
-    cout << "\n자료형 크기:" << endl;
-    cout << "int: " << sizeof(int) << " bytes" << endl;
-    cout << "double: " << sizeof(double) << " bytes" << endl;
-    cout << "string: " << sizeof(string) << " bytes" << endl;
+    const double PI = 3.14;
+    cout << "PI " << PI << endl;
 
     return 0;
 }
