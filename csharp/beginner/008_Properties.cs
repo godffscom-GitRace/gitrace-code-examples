@@ -3,77 +3,59 @@
 
 using System;
 
-namespace Properties
+class Program
 {
-    class Program
+    static void Main()
     {
-        static void Main(string[] args)
+        var s = new User("Tom", 20);
+        Console.WriteLine(s.Info);
+
+        s.Age = 25;
+        Console.WriteLine(s.Info);
+
+        s.Age = -1;
+        Console.WriteLine(s.Age);
+
+        var p = new Item { Name = "Pen", Price = 100 };
+        Console.WriteLine(p.Label);
+
+        Console.WriteLine(p.Discount(0.5));
+    }
+}
+
+class User
+{
+    public string Name { get; private set; }
+
+    private int age;
+    public int Age
+    {
+        get { return age; }
+        set
         {
-            // 객체 생성 및 프로퍼티 사용
-            Student s1 = new Student("김철수", 20);
-            Console.WriteLine(s1.Name);      // get 호출
-            Console.WriteLine(s1.Age);
-            Console.WriteLine(s1.Info);       // 표현식 본문 프로퍼티
-
-            s1.Age = 21;                      // set 호출
-            Console.WriteLine($"변경 후: {s1.Age}살");
-
-            // s1.Name = "이영희";            // Error! private set
-
-            // 나이 유효성 검사
-            s1.Age = -5;                      // set에서 검증 → 무시됨
-            Console.WriteLine($"잘못된 값 후: {s1.Age}살"); // 여전히 21
-
-            // 객체 초기화 구문
-            var s2 = new Product
-            {
-                Name = "노트북",
-                Price = 1500000
-            };
-            Console.WriteLine($"\n{s2.Name}: {s2.FormattedPrice}");
-            Console.WriteLine($"할인가: {s2.GetDiscountPrice(0.1):N0}원");
+            if (value > 0)
+                age = value;
         }
     }
 
-    class Student
+    public string Info => Name + " " + Age;
+
+    public User(string n, int a)
     {
-        // 자동 프로퍼티 + private set
-        public string Name { get; private set; }
-
-        // get, set 접근자 (유효성 검사)
-        private int _age;
-        public int Age
-        {
-            get { return _age; }
-            set
-            {
-                if (value > 0 && value < 150)
-                    _age = value;
-            }
-        }
-
-        // 표현식 본문 프로퍼티 (읽기 전용)
-        public string Info => $"{Name}, {Age}살";
-
-        public Student(string name, int age)
-        {
-            Name = name;
-            Age = age;
-        }
+        Name = n;
+        Age = a;
     }
+}
 
-    class Product
+class Item
+{
+    public string Name { get; set; } = "";
+    public int Price { get; set; }
+
+    public string Label => Name + " " + Price;
+
+    public int Discount(double r)
     {
-        // 자동 프로퍼티
-        public string Name { get; set; } = "";
-        public int Price { get; set; }
-
-        // 읽기 전용 표현식 본문
-        public string FormattedPrice => $"{Price:N0}원";
-
-        public double GetDiscountPrice(double rate)
-        {
-            return Price * (1 - rate);
-        }
+        return (int)(Price * (1 - r));
     }
 }
